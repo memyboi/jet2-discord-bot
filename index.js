@@ -216,24 +216,27 @@ client.on("messageCreate", async message => {
       break;
 
       case 'givexp':
-        if (!guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
+        if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
         const mentionedMember = message.mentions.members.first()
         const memberUserId = mentionedMember.id
         addXP(message.guild.id, memberUserId, parseInt(args[2]))
+        message.reply("Added " + args[2] + " xp to " + mentionedMember.tag + "'s stats")
       break;
 
       case 'givepoints':
-        if (!guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
+        if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
         const mentionedMembera = message.mentions.members.first()
         const memberUserIda = mentionedMembera.id
         addCoins(message.guild.id, memberUserIda, parseInt(args[2]))
+        message.reply("Added " + args[2] + " points to " + mentionedMembera.tag + "'s stats")
       break;
 
       case 'givelevels':
-        if (!guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
+        if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
         const mentionedMemberaa = message.mentions.members.first()
         const memberUserIdaa = mentionedMemberaa.id
         addLevelCmd(message.guild.id, memberUserIdaa, parseInt(args[2]))
+        message.reply("Added " + args[2] + " levels to " + mentionedMemberaa.tag + "'s stats")
       break;
         
       case 'help':
