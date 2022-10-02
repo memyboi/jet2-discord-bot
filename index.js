@@ -171,19 +171,35 @@ client.on("messageCreate", async message => {
         client.commands.get('roles').execute(message, args, client);
       break;
 
-      case 'af' || 'aflight':
+      case 'aflight':
         client.commands.get('aflight').execute(message, args, client);
       break;
 
-      case 'askf' || 'askflight':
+      case 'af':
+        client.commands.get('aflight').execute(message, args, client);
+      break;
+
+      case 'askflight':
         client.commands.get('askflight').execute(message, args, client);
       break;
 
-      case 'cf' || 'cancelflight':
+      case 'askf':
+        client.commands.get('askflight').execute(message, args, client);
+      break;
+
+      case 'cancelflight':
         client.commands.get('cancelflight').execute(message, args, client);
       break;
 
-      case 'aa' || 'askadmin':
+      case 'cf':
+        client.commands.get('cancelflight').execute(message, args, client);
+      break;
+
+      case 'aa':
+        client.commands.get('askadmin').execute(message, args, client);
+      break;
+
+      case 'askadmin':
         client.commands.get('askadmin').execute(message, args, client);
       break;
 
@@ -199,7 +215,11 @@ client.on("messageCreate", async message => {
         client.commands.get('shop').execute(message, args, client);
       break;
 
-      case 'f' || 'flight':
+      case 'flight':
+        client.commands.get('flight').execute(message, args, client);
+      break;
+
+      case 'f':
         client.commands.get('flight').execute(message, args, client);
       break;
 

@@ -15,102 +15,111 @@ module.exports = {
 
         var hasResponded = false
 
+        function announce() {
+            const row = new ActionRowBuilder()
+            .addComponents(
+            new SelectMenuBuilder()
+            .setCustomId('aflight timeframe')
+            .setPlaceholder('No timeframe selected')
+            .addOptions(
+                {
+                label: 'Now',
+                value: 'now',
+                },
+                {
+                label: '5 minutes',
+                value: '5m',
+                },
+                {
+                label: '10 minutes',
+                value: '10m',
+                },
+                {
+                label: '15 minutes',
+                value: '15m',
+                },
+                {
+                label: '20 minutes',
+                value: '20m',
+                },
+                {
+                label: '25 minutes',
+                value: '25m',
+                },
+                {
+                label: '30 minutes',
+                value: '30m',
+                },
+                {
+                label: '45 minutes',
+                value: '45m',
+                },
+                {
+                label: '1 hour',
+                value: '1h',
+                },
+                {
+                label: '1 hour and 15 minutes',
+                value: '1h15m',
+                },
+                {
+                label: '1 hour and 30 minutes',
+                value: '1h30m',
+                },
+                {
+                label: '1 hour and 45 minutes',
+                value: '1h45m',
+                },
+                {
+                label: '2 hours',
+                value: '2h',
+                },
+                {
+                label: '3 hours',
+                value: '3h',
+                },
+                {
+                label: '4 hours',
+                value: '4h',
+                },
+                {
+                label: '5 hours',
+                value: '5h',
+                },
+                {
+                label: '6 hours',
+                value: '6h',
+                },
+                {
+                label: 'Nothing - Cancel',
+                description: 'If this is selected, the announcement will be cancelled. No announcement will be made.',
+                value: 'cancel',
+                },
+            ),
+                );
+
+            if (message.guild != null) {
+            member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .then(() => {
+                message.delete()
+            }) .catch((err) => {
+                message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.")
+            })
+            } else {
+            member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .catch((err) => {
+                message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.")
+            })
+            }
+        }
+
         switch (args[1]) {
-            case "a" || "announce":
+            case "a":
                 hasResponded = true
-                const row = new ActionRowBuilder()
-                .addComponents(
-                new SelectMenuBuilder()
-                .setCustomId('aflight timeframe')
-                .setPlaceholder('No timeframe selected')
-                .addOptions(
-                    {
-                    label: 'Now',
-                    value: 'now',
-                    },
-                    {
-                    label: '5 minutes',
-                    value: '5m',
-                    },
-                    {
-                    label: '10 minutes',
-                    value: '10m',
-                    },
-                    {
-                    label: '15 minutes',
-                    value: '15m',
-                    },
-                    {
-                    label: '20 minutes',
-                    value: '20m',
-                    },
-                    {
-                    label: '25 minutes',
-                    value: '25m',
-                    },
-                    {
-                    label: '30 minutes',
-                    value: '30m',
-                    },
-                    {
-                    label: '45 minutes',
-                    value: '45m',
-                    },
-                    {
-                    label: '1 hour',
-                    value: '1h',
-                    },
-                    {
-                    label: '1 hour and 15 minutes',
-                    value: '1h15m',
-                    },
-                    {
-                    label: '1 hour and 30 minutes',
-                    value: '1h30m',
-                    },
-                    {
-                    label: '1 hour and 45 minutes',
-                    value: '1h45m',
-                    },
-                    {
-                    label: '2 hours',
-                    value: '2h',
-                    },
-                    {
-                    label: '3 hours',
-                    value: '3h',
-                    },
-                    {
-                    label: '4 hours',
-                    value: '4h',
-                    },
-                    {
-                    label: '5 hours',
-                    value: '5h',
-                    },
-                    {
-                    label: '6 hours',
-                    value: '6h',
-                    },
-                    {
-                    label: 'Nothing - Cancel',
-                    description: 'If this is selected, the announcement will be cancelled. No announcement will be made.',
-                    value: 'cancel',
-                    },
-                ),
-                    );
-    
-                if (message.guild != null) {
-                member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .then(() => {
-                    message.delete()
-                }) .catch((err) => {
-                    message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.")
-                })
-                } else {
-                member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .catch((err) => {
-                    message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.")
-                })
-                }
+                announce()
+            break;
+
+            case "announce":
+                hasResponded = true
+                announce()
             break;
 
             case "ask":
@@ -135,7 +144,19 @@ module.exports = {
                 })
             break;
 
-            case "c" || "cancel":
+            case "c":
+                hasResponded = true
+                guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
+                    if (message.guild != null) message.delete()
+          
+                    channel.lastMessage.reply("This has been cancelled. Sorry!")
+                    
+                  }) .catch((err) => {
+                    message.reply("There was a problem while getting the last post in the channel. Sorry!\n\nTechnical details:\n```" + err + "```")
+                })
+            break;
+
+            case "cancel":
                 hasResponded = true
                 guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
                     if (message.guild != null) message.delete()
