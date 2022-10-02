@@ -199,6 +199,10 @@ client.on("messageCreate", async message => {
         client.commands.get('shop').execute(message, args, client);
       break;
 
+      case 'f' || 'flight':
+        client.commands.get('flight').execute(message, args, client);
+      break;
+
       case 'givexp':
         if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
         const mentionedMember = message.mentions.members.first()
