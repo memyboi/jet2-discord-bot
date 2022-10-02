@@ -171,35 +171,19 @@ client.on("messageCreate", async message => {
         client.commands.get('roles').execute(message, args, client);
       break;
 
-      case 'aflight':
+      case 'af' || 'aflight':
         client.commands.get('aflight').execute(message, args, client);
       break;
 
-      case 'af':
-        client.commands.get('aflight').execute(message, args, client);
-      break;
-
-      case 'askflight':
+      case 'askf' || 'askflight':
         client.commands.get('askflight').execute(message, args, client);
       break;
 
-      case 'askf':
-        client.commands.get('askflight').execute(message, args, client);
-      break;
-
-      case 'cf':
+      case 'cf' || 'cancelflight':
         client.commands.get('cancelflight').execute(message, args, client);
       break;
 
-      case 'cancelflight':
-        client.commands.get('cancelflight').execute(message, args, client);
-      break;
-
-      case 'askadmin':
-        client.commands.get('askadmin').execute(message, args, client);
-      break;
-
-      case 'aa':
+      case 'aa' || 'askadmin':
         client.commands.get('askadmin').execute(message, args, client);
       break;
 
@@ -277,9 +261,10 @@ client.on("messageCreate", async message => {
           .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
           .setDescription('' + prefix + "help page 3")
           .addFields(
+            { name: prefix + client.commands.get('flight').name, value: client.commands.get('flight').description, inline: true },
             { name: prefix + client.commands.get('aflight').name, value: client.commands.get('aflight').description, inline: true },
-            { name: prefix + client.commands.get('askflight').name, value: client.commands.get('askflight').description, inline: true },
             { name: prefix + client.commands.get('cancelflight').name, value: client.commands.get('cancelflight').description, inline: true },
+            { name: prefix + client.commands.get('askflight').name, value: client.commands.get('askflight').description, inline: true },
           )
           .setTimestamp()
 
@@ -329,11 +314,11 @@ client.on("interactionCreate", async interaction => {
       case "aflight timeframe":
         //aflight select menu for timeframe of flight
         if (interaction.values[0] == "cancel") return interaction.message.edit({
-          content: "This announcement has been cancelled. Please post `.aflight` in `Jet2 Communications Server` or `here, in DMs` to announce a flight.",
+          content: "This announcement has been cancelled. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce a flight.",
           components: []
         })
         interaction.message.edit({
-          content: "This `.aflight` command has been used. Please post `.aflight` in `Jet2 Communications Server` or `here, in DMs` to announce another flight.\nOption: " + interaction.values[0],
+          content: "This `.flight announce` command has been used. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce another flight.\nOption: " + interaction.values[0],
           components: []
         }) .then((msg) => {
           let time = "nil value"
