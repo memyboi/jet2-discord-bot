@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 5
+const buildNum = 6
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -456,6 +456,10 @@ client.on("interactionCreate", async interaction => {
         
         interaction.deferUpdate();
       break;
+
+      case "aflight destination":
+        interaction.deferUpdate();
+      break;
     }
   } else if (interaction.isButton()) {
     switch(interaction.customId){
@@ -463,6 +467,7 @@ client.on("interactionCreate", async interaction => {
         //cancel announcement form
         let cancelMsg = "This announcement has been cancelled. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce a flight."
         interaction.message.edit({content: cancelMsg, components: [], embeds: []})
+        interaction.deferUpdate();
       break;
 
       case "postAnn":

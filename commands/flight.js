@@ -96,7 +96,7 @@ module.exports = {
             .addComponents(
             new SelectMenuBuilder()
             .setCustomId('aflight destination')
-            .setPlaceholder('No destination selected.')
+            .setPlaceholder('No destination selected')
             .addOptions(
                 {
                 label: 'N/A',
