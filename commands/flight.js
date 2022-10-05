@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const talkedRecently = new Set();
 const commandDelay = 1 //seconds 
 
@@ -100,25 +100,42 @@ module.exports = {
             const row2 = new ActionRowBuilder()
             .addComponents(
             new SelectMenuBuilder()
-            .setCustomId('sm2')
-            .setPlaceholder('SM2')
+            .setCustomId('aflight destination')
+            .setPlaceholder('No destination selected.')
             .addOptions(
                 {
-                label: 'Now',
-                value: 'now',
-                }
+                label: 'N/A',
+                value: 'unknown',
+                },
+                {
+                label: 'Robloxia Town',
+                value: 'Robloxia Town',
+                },
             ),
             );
 
+            const row3cantpost = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('cancelAnn')
+                    .setLabel('Cancel Announcement')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId('postAnn')
+                    .setLabel('Post Announcement')
+                    .setStyle(ButtonStyle.Success)
+                    .setDisabled(true)
+            )
+
             if (message.guild != null) {
-            member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row, row2]} ) .then(() => {
+            member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row, row2, row3cantpost]} ) .then(() => {
                 message.delete()
             }) .catch((err) => {
                 message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
                 console.log(err)
             })
             } else {
-            member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row, row2]} ) .catch((err) => {
+            member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row, row2, row3cantpost]} ) .catch((err) => {
                 message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
             })
             }
