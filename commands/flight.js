@@ -90,11 +90,6 @@ module.exports = {
                 label: '6 hours',
                 value: '6h',
                 },
-                {
-                label: 'Nothing - Cancel',
-                description: 'If this is selected, the announcement will be cancelled. No announcement will be made.',
-                value: 'cancel',
-                },
             ),
             );
             const row2 = new ActionRowBuilder()
@@ -117,14 +112,14 @@ module.exports = {
             const row3cantpost = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('cancelAnn')
-                    .setLabel('Cancel Announcement')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
                     .setCustomId('postAnn')
                     .setLabel('Post Announcement')
                     .setStyle(ButtonStyle.Success)
-                    .setDisabled(true)
+                    .setDisabled(true),
+                new ButtonBuilder()
+                    .setCustomId('cancelAnn')
+                    .setLabel('Cancel Announcement')
+                    .setStyle(ButtonStyle.Danger)
             )
 
             if (message.guild != null) {

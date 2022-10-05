@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 4
+const buildNum = 5
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -288,10 +288,6 @@ client.on("interactionCreate", async interaction => {
     switch(interaction.customId){
       case "aflight timeframe":
         //aflight select menu for timeframe of flight
-        if (interaction.values[0] == "cancel") return interaction.message.edit({
-          content: "This announcement has been cancelled. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce a flight.",
-          components: []
-        })
         interaction.message.edit({
           content: "This `.flight announce` command has been used. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce another flight.\nOption: " + interaction.values[0],
           components: []
@@ -459,6 +455,19 @@ client.on("interactionCreate", async interaction => {
         }
         
         interaction.deferUpdate();
+      break;
+    }
+  } else if (interaction.isButton()) {
+    switch(interaction.customId){
+      case "cancelAnn":
+        //cancel announcement form
+        let cancelMsg = "This announcement has been cancelled. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce a flight."
+        interaction.message.edit({content: cancelMsg, components: [], embeds: []})
+      break;
+
+      case "postAnn":
+        //post announcement form to flight-announcements
+
       break;
     }
   }
