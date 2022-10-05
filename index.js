@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 13
+const buildNum = 14
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -72,12 +72,15 @@ function checkifpostable(interaction) {
   function chckIsPostAvail(row, idx, allrows) { //if 2, available, if 1 / 0, not
     if (idx == 0) {
       let selectMenu = row.components[0]
+      console.log(selectMenu)
+      console.log("!!!!row components:\n\n" + row.components)
       if (selectMenu.values[0] != null || selectMenu.values[0] != "") {
         chckNum++;
       }
       row1 = row
     } else if (idx == 1) {
       let selectMenu = row.components[0]
+      console.log(selectMenu)
       if (selectMenu.values[0] != null || selectMenu.values[0] != "") {
         chckNum++;
       }
