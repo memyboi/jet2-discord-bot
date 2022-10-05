@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 7
+const buildNum = 8
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -363,39 +363,9 @@ client.on("interactionCreate", async interaction => {
             break;
           }
           
-          console.log("" + interaction.user.tag + " selected " + time + " for an announcement!")
+          console.log("" + interaction.user.tag + " selected " + time + " for the time for an announcement!")
 
-          client.guilds.fetch("" + process.env.guildid) .then((guild) => {
-            guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
-              if (SendAnnInEmbed == false) {
-                if (SendTestAnnouncements) channel.send("||@here||\nTHIS IS A TEST, DO NOT JOIN\n\n" + process.env.emojilogo + "**Flight Announcement by " + interaction.user.tag + "** " + process.env.emojilogo + "\nHappening " + time + "!")
-                if (!SendTestAnnouncements) channel.send("||@everyone||\n\n" + process.env.emojilogo + "**Flight Announcement by " + interaction.user.tag + "** " + process.env.emojilogo + "\nHappening " + time + "!")
-              } else {
-                const testAnnouncementEmbed = new EmbedBuilder()
-                  .setColor('#ff0000')
-                  .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
-                  .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-                  .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
-                  .addFields(
-                    { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
-                  )
-                  .setTimestamp()
-                const announcementEmbed = new EmbedBuilder()
-                  .setColor('#ff0000')
-                  .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
-                  .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-                  .setDescription('This is an announcement for a flight!')
-                  .addFields(
-                    { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
-                  )
-                  .setTimestamp()
-                if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
-                if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
-              }
-              
-              
-            })
-          })
+          
         }) .catch((err) => {
           console.log(err)
         })
@@ -458,6 +428,8 @@ client.on("interactionCreate", async interaction => {
       break;
 
       case "aflight destination":
+        let dest = interaction.values[0]
+        console.log("" + interaction.user.tag + " selected " + dest + " for a destination for an announcement!")
         interaction.deferUpdate();
       break;
     }
@@ -472,7 +444,35 @@ client.on("interactionCreate", async interaction => {
 
       case "postAnn":
         //post announcement form to flight-announcements
-
+        client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+          guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
+            if (SendAnnInEmbed == false) {
+              if (SendTestAnnouncements) channel.send("||@here||\nTHIS IS A TEST, DO NOT JOIN\n\n" + process.env.emojilogo + "**Flight Announcement by " + interaction.user.tag + "** " + process.env.emojilogo + "\nHappening " + time + "!")
+              if (!SendTestAnnouncements) channel.send("||@everyone||\n\n" + process.env.emojilogo + "**Flight Announcement by " + interaction.user.tag + "** " + process.env.emojilogo + "\nHappening " + time + "!")
+            } else {
+              const testAnnouncementEmbed = new EmbedBuilder()
+                .setColor('#ff0000')
+                .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
+                .addFields(
+                  { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
+                )
+                .setTimestamp()
+              const announcementEmbed = new EmbedBuilder()
+                .setColor('#ff0000')
+                .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
+                .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                .setDescription('This is an announcement for a flight!')
+                .addFields(
+                  { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
+                )
+                .setTimestamp()
+              if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
+              if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
+            }
+          })
+        })
       break;
     }
   }
