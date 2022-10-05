@@ -70,66 +70,6 @@ const addLevel = async (guildId, userId, cLevel) => {
   }
 }
 
-const addXP = async (guildId, userId, xpToAdd) => {
-  try {
-    const result = await xpSchema.findOneAndUpdate({
-      guildId,
-      userId
-    }, {
-      guildId,
-      userId,
-      $inc: {
-        xp: xpToAdd
-      }
-    }, {
-      upsert: true,
-      new: true
-    })
-  } catch(e) {
-    console.log(e)
-  }
-}
-
-const addCoins = async (guildId, userId, coinsToAdd) => {
-  try {
-    const result = await xpSchema.findOneAndUpdate({
-      guildId,
-      userId
-    }, {
-      guildId,
-      userId,
-      $inc: {
-        coins: coinsToAdd
-      }
-    }, {
-      upsert: true,
-      new: true
-    })
-  } catch(e) {
-    console.log(e)
-  }
-}
-
-const addLevelCmd = async (guildId, userId, levels) => {
-  try {
-    const result = await xpSchema.findOneAndUpdate({
-      guildId,
-      userId
-    }, {
-      guildId,
-      userId,
-      $inc: {
-        level: levels,
-      }
-    }, {
-      upsert: true,
-      new: true
-    })
-  } catch(e) {
-    console.log(e)
-  }
-}
-
 async function doXp(message) {
   addXP(message.guild.id, message.author.id, getRandomArbitrary(1, 5))
   let cLevel = 1
@@ -164,9 +104,10 @@ const prefix = '.';
 client.on("messageCreate", async message => {
   if (!message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.guild != null) doXp(message)
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
-    let args = message.content.substring(prefix.length).toLowerCase().split(" ")
+    let lowerargs = message.content.substring(prefix.length).toLowerCase().split(" ")
+    let args = message.content.substring(prefix.length).split(" ")
 
-    switch(args[0]){
+    switch(lowerargs[0]){
       case 'roles':
         client.commands.get('roles').execute(message, args, client);
       break;
@@ -208,7 +149,7 @@ client.on("messageCreate", async message => {
       break;
 
       case 'buy':
-        client.commands.get('buy').execute(message, args, client, xpSchema);
+        client.commands.get('buy').execute(message, args, client, xpSchema, lowerargs);
       break;
 
       case 'shop':
@@ -224,27 +165,15 @@ client.on("messageCreate", async message => {
       break;
 
       case 'givexp':
-        if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
-        const mentionedMember = message.mentions.members.first()
-        const memberUserId = mentionedMember.id
-        addXP(message.guild.id, memberUserId, parseInt(args[2]))
-        message.reply("Added " + args[2] + " xp to " + mentionedMember.tag + "'s stats")
+        client.commands.get('givexp').execute(message, args, client, xpSchema);
       break;
 
       case 'givepoints':
-        if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
-        const mentionedMembera = message.mentions.members.first()
-        const memberUserIda = mentionedMembera.id
-        addCoins(message.guild.id, memberUserIda, parseInt(args[2]))
-        message.reply("Added " + args[2] + " points to " + mentionedMembera.tag + "'s stats")
+        client.commands.get('givepoints').execute(message, args, client, xpSchema);
       break;
 
       case 'givelevels':
-        if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.id === '1022242671202418809')) return message.reply("You do not have the permissions do to this command!\nYou need the role <@&1022242671202418809> to do this!")
-        const mentionedMemberaa = message.mentions.members.first()
-        const memberUserIdaa = mentionedMemberaa.id
-        addLevelCmd(message.guild.id, memberUserIdaa, parseInt(args[2]))
-        message.reply("Added " + args[2] + " levels to " + mentionedMemberaa.tag + "'s stats")
+        client.commands.get('givelevels').execute(message, args, client, xpSchema);
       break;
         
       case 'help':
@@ -252,7 +181,7 @@ client.on("messageCreate", async message => {
           .setColor('#ff0000')
           .setTitle("Command help:")
           .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('Do ' + prefix + "help [1-4] for info about me!")
+          .setDescription('Do ' + prefix + "help [1-5] for info about me!")
           .setTimestamp()
         
         const helpEmbed1 = new EmbedBuilder()
@@ -298,19 +227,33 @@ client.on("messageCreate", async message => {
           .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
           .setDescription('' + prefix + "help page 4")
           .addFields(
+            { name: prefix + client.commands.get('givepoints').name, value: client.commands.get('givepoints').description, inline: true },
+            { name: prefix + client.commands.get('givexp').name, value: client.commands.get('givexp').description, inline: true },
+            { name: prefix + client.commands.get('givelevels').name, value: client.commands.get('givelevels').description, inline: true },
+          )
+          .setTimestamp()
+
+        const helpEmbed5 = new EmbedBuilder()
+          .setColor('#ff0000')
+          .setTitle("Command help:")
+          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+          .setDescription('' + prefix + "help page 5")
+          .addFields(
             { name: "Who created me?", value: "DeadFry42#5445", inline: true },
             { name: "What is my purpose?", value: "My purpose is to assist with the Jet2 Staff! I may offer some things to passengers, too, but my priority is helping staff.", inline: true },
           )
           .setTimestamp()
 
-        if (args[1] == "1") {
+        if (lowerargs[1] == "1") {
           return message.reply({ embeds: [helpEmbed1]});
-        } else if (args[1] == "2") {
+        } else if (lowerargs[1] == "2") {
           return message.reply({ embeds: [helpEmbed2]});
-        } else if (args[1] == "3") {
+        } else if (lowerargs[1] == "3") {
           return message.reply({ embeds: [helpEmbed3]});
-        } else if (args[1] == "4") {
+        } else if (lowerargs[1] == "4") {
           return message.reply({ embeds: [helpEmbed4]});
+        } else if (lowerargs[1] == "5") {
+          return message.reply({ embeds: [helpEmbed5]});
         }
         message.reply({ embeds: [helpEmbed]});
       break;
@@ -328,7 +271,7 @@ client.on("ready", async () => {
     }
   )
   console.log("ready and on")
-  client.user.setActivity(prefix + 'help for help', { type: ActivityType.Playing })
+  client.user.setActivity(prefix + 'help [1-5] for help', { type: ActivityType.Playing })
 })
 
 client.on("interactionCreate", async interaction => {

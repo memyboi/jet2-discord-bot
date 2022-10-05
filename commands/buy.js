@@ -5,7 +5,7 @@ const commandDelay = 1 //seconds
 module.exports = {
   name: 'buy',
   description: "Buys a certain item from .shop",
-  async execute(message, args, client, xpSchema){
+  async execute(message, args, client, xpSchema, lowerargs){
     if (message.guild == null) return message.reply("You cannot do this command in DMs.");
     if (talkedRecently.has(message.author.id)) {
       message.channel.send("Please wait " + commandDelay + " second(s) until you can use this command again");
@@ -28,8 +28,8 @@ module.exports = {
       let guildId = message.guild.id
       let userId = message.author.id
       
-      if (args[1] == "exotic") {
-        console.log(args[1])
+      if (lowerargs[1] == "exotic") {
+        console.log(lowerargs[1])
         let status = await availableTB(25)
         if (status == 0) {
           //buy
@@ -64,6 +64,8 @@ module.exports = {
         } else if (status == 2) {
           //error
           message.reply("An error occured while doing the command. No change has occured.")
+        } else {
+          message.reply("An error occured while checking the transaction. No change has occured.")
         }
       }
 

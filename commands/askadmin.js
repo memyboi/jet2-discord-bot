@@ -21,7 +21,7 @@ module.exports = {
           .addComponents(
           new SelectMenuBuilder()
             .setCustomId('askadmin admin select')
-            .setPlaceholder('No admin selected')
+            .setPlaceholder('Please select an admin here:')
             .addOptions(
               {
                 label: 'Lego#7909',
@@ -43,11 +43,11 @@ module.exports = {
 
           if (args.join(" ") == null || args.join(" ") == "") {
             if (message.guild != null) {
-              member.send("You did the command `.askadmin` in `Jet2 Communications Server`, however, you did not add a reason. Please add a reason to the command!")
+              member.send("You did the command `.askadmin` in `Jet2 Communications Server`, however, you did not add a reason. Please add a reason to the end of command!\nYour cooldown for 1h has not started, as it starts when you add a reason to the command.")
               message.delete()
               return 0
             } else if (message.guild == null) {
-              member.send("You did the command `.askadmin` in `DMs`, however, you did not add a reason. Please add a reason to the command!")
+              member.send("You did the command `.askadmin` in `DMs`, however, you did not add a reason. Please add a reason to the command!\nYour cooldown for 1h has not started, as it starts when you add a reason to the command.")
               return 0
             } 
           }
