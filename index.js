@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 6
+const buildNum = 7
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
