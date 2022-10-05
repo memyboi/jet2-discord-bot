@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 2
+const buildNum = 3
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -276,7 +276,7 @@ client.on("ready", async () => {
   )
   console.log("ready and on")
   if (devBuild) {
-    client.user.setActivity(prefix + 'db.' + buildNum, { type: ActivityType.Playing })
+    client.user.setActivity('dev build ' + buildNum, { type: ActivityType.Playing })
   } else {
     client.user.setActivity(prefix + 'help [1-5] for help', { type: ActivityType.Playing })
   }

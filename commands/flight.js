@@ -96,26 +96,29 @@ module.exports = {
                 value: 'cancel',
                 },
             ),
+            );
+            const row2 = new ActionRowBuilder()
+            .addComponents(
             new SelectMenuBuilder()
-            .setCustomId('stm2')
-            .setPlaceholder('TEST SELECT MENU 2')
+            .setCustomId('sm2')
+            .setPlaceholder('SM2')
             .addOptions(
                 {
-                label: 'This is a test',
-                value: 'tiat',
-                },
+                label: 'Now',
+                value: 'now',
+                }
             ),
-                );
+            );
 
             if (message.guild != null) {
-            member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .then(() => {
+            member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row, row2]} ) .then(() => {
                 message.delete()
             }) .catch((err) => {
                 message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
                 console.log(err)
             })
             } else {
-            member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .catch((err) => {
+            member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row, row2]} ) .catch((err) => {
                 message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
             })
             }
