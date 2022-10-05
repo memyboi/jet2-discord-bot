@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 11
+const buildNum = 12
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -50,6 +50,44 @@ for(const file of commandFiles){
 
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+function checkifpostable(interaction) {
+  let chckNum = 0
+  let row1
+  let row2
+
+  let row3 = new ActionRowBuilder()
+    .addComponents(
+        new ButtonBuilder()
+            .setCustomId('postAnn')
+            .setLabel('Post Announcement')
+            .setStyle(ButtonStyle.Success),
+        new ButtonBuilder()
+            .setCustomId('cancelAnn')
+            .setLabel('Cancel Announcement')
+            .setStyle(ButtonStyle.Danger)
+    )
+
+  function chckIsPostAvail(row, idx, allrows) { //if 2, available, if 1 / 0, not
+    if (idx == 0) {
+      let selectMenu = row.components[0]
+      if (selectMenu.values[0] != null || selectMenu.values[0] != "") {
+        chckNum++;
+      }
+      row1 = row
+    } else if (idx == 1) {
+      let selectMenu = row.components[0]
+      if (selectMenu.values[0] != null || selectMenu.values[0] != "") {
+        chckNum++;
+      }
+      row2 = row
+    }
+  }
+  interaction.message.components.forEach(chckIsPostAvail)
+  if (chckNum == 2) {
+    interaction.message.edit({content: interaction.message.content, components: [row1, row2, row3] })
+  } 
 }
 
 const addLevel = async (guildId, userId, cLevel) => {
@@ -369,6 +407,7 @@ client.on("interactionCreate", async interaction => {
         }) .catch((err) => {
           console.log(err)
         })
+        chckIsPostAvail()
         interaction.deferUpdate();
       break;
 
@@ -428,12 +467,9 @@ client.on("interactionCreate", async interaction => {
       break;
 
       case "aflight destination":
-        function logComponentName(a, b, c, d, e) {
-          console.log("a" + a + "\nb" + b + "\nc" + c + "\nd" + d + "\ne" + e + "\n")
-        }
-        interaction.message.components.forEach(logComponentName)
         let dest = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + dest + " for a destination for an announcement!")
+        chckIsPostAvail()
         interaction.deferUpdate();
       break;
     }
@@ -447,6 +483,25 @@ client.on("interactionCreate", async interaction => {
       break;
 
       case "postAnn":
+        let timeofflight = "undefined"
+        let destofflight = "undefined"
+
+        function docomponentstuffs(row, idx, allrows) {
+          if (idx == 0) {
+            //First row, time row
+            let selectMenu = row.components[0]
+            timeofflight = selectMenu.values[0]
+          } else if (idx == 1) {
+            //Second row, dest row
+            let selectMenu = row.components[0]
+            destofflight = selectMenu.values[0]
+          } else if (idx == 2) {
+            //Third row, Post and cancel buttons row
+            //we dont really need these.
+          }
+        }
+        interaction.message.components.forEach(docomponentstuffs)
+
         //post announcement form to flight-announcements
         client.guilds.fetch("" + process.env.guildid) .then((guild) => {
           guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
@@ -460,7 +515,8 @@ client.on("interactionCreate", async interaction => {
                 .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
                 .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
                 .addFields(
-                  { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
+                  { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+                  { name: "Where is it going to?", value: destofflight, inline: false },
                 )
                 .setTimestamp()
               const announcementEmbed = new EmbedBuilder()
@@ -470,6 +526,7 @@ client.on("interactionCreate", async interaction => {
                 .setDescription('This is an announcement for a flight!')
                 .addFields(
                   { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
+                  { name: "Where is it going to?", value: destofflight, inline: false },
                 )
                 .setTimestamp()
               if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
