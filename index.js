@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 10
+const buildNum = 11
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -431,7 +431,7 @@ client.on("interactionCreate", async interaction => {
         function logComponentName(a, b, c, d, e) {
           console.log("a" + a + "\nb" + b + "\nc" + c + "\nd" + d + "\ne" + e + "\n")
         }
-        console.log(interaction.message.components.forEach)
+        interaction.message.components.forEach(logComponentName)
         let dest = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + dest + " for a destination for an announcement!")
         interaction.deferUpdate();
