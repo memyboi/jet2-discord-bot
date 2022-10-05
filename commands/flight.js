@@ -96,6 +96,15 @@ module.exports = {
                 value: 'cancel',
                 },
             ),
+            new SelectMenuBuilder()
+            .setCustomId('aflight timeframe')
+            .setPlaceholder('TEST SELECT MENU 2')
+            .addOptions(
+                {
+                label: 'This is a test',
+                value: 'tiat',
+                },
+            ),
                 );
 
             if (message.guild != null) {

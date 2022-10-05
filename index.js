@@ -5,9 +5,13 @@ const mpassword = process.env.MONGO_PASSWORD
 const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb.net/?retryWrites=true&w=majority`
 
+//BUILD SETTINGS
+const devBuild = true
+const buildNum = 1
+
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
-const SendTestAnnouncements = false //Send Announcements as a 'test announcement', which pings @here and states it is a test.
+const SendTestAnnouncements = true //Send Announcements as a 'test announcement', which pings @here and states it is a test.
 const minXpForLvlUp = 100 //Minimum XP required to level up.
 const lvlMultiplier = 1.3 //How much the minimum XP cap multiplies by on level up
 const minCoinReward = 5 //Minimum coins you get for leveling up
@@ -271,7 +275,11 @@ client.on("ready", async () => {
     }
   )
   console.log("ready and on")
-  client.user.setActivity(prefix + 'help [1-5] for help', { type: ActivityType.Playing })
+  if (devBuild) {
+    client.user.setActivity(prefix + 'db.' + buildNum, { type: ActivityType.Playing })
+  } else {
+    client.user.setActivity(prefix + 'help [1-5] for help', { type: ActivityType.Playing })
+  }
 })
 
 client.on("interactionCreate", async interaction => {
@@ -288,7 +296,7 @@ client.on("interactionCreate", async interaction => {
           content: "This `.flight announce` command has been used. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce another flight.\nOption: " + interaction.values[0],
           components: []
         }) .then((msg) => {
-          let time = "nil value"
+          let time = "error: time unspecified"
           switch(interaction.values[0]){
             case "now":
               time = "now! Join up *(link in <#1007959104611946547>)*"
@@ -371,7 +379,7 @@ client.on("interactionCreate", async interaction => {
                   .setColor('#ff0000')
                   .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
                   .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-                  .setDescription('This is an announcement for a test flight!')
+                  .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
                   .addFields(
                     { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
                   )
@@ -385,7 +393,7 @@ client.on("interactionCreate", async interaction => {
                     { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
                   )
                   .setTimestamp()
-                if (SendTestAnnouncements) channel.send({ content: "||@here||", embeds: [testAnnouncementEmbed]});
+                if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
               }
               
