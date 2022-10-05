@@ -97,7 +97,7 @@ module.exports = {
                 },
             ),
             new SelectMenuBuilder()
-            .setCustomId('aflight timeframe')
+            .setCustomId('stm2')
             .setPlaceholder('TEST SELECT MENU 2')
             .addOptions(
                 {
@@ -111,11 +111,12 @@ module.exports = {
             member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .then(() => {
                 message.delete()
             }) .catch((err) => {
-                message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.")
+                message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
+                console.log(err)
             })
             } else {
             member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.", components: [row]} ) .catch((err) => {
-                message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.")
+                message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
             })
             }
         }
