@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 14
+const buildNum = 15
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -73,23 +73,23 @@ function checkifpostable(interaction) {
     if (idx == 0) {
       let selectMenu = row.components[0]
       console.log(selectMenu)
-      console.log("!!!!row components:\n\n" + row.components)
-      if (selectMenu.values[0] != null || selectMenu.values[0] != "") {
-        chckNum++;
-      }
+      chckNum++;
       row1 = row
     } else if (idx == 1) {
       let selectMenu = row.components[0]
       console.log(selectMenu)
-      if (selectMenu.values[0] != null || selectMenu.values[0] != "") {
+      if (chckNum == 1 && selectMenu.disabled == true) {
+        selectMenu.setDisabled(false);
+      } else if (selectMenu.disabled == false) {
         chckNum++;
       }
+      
       row2 = row
     }
   }
   interaction.message.components.forEach(chckIsPostAvail)
   if (chckNum == 2) {
-    interaction.message.edit({content: interaction.message.content, components: [row1, row2, row3] })
+    interaction.message.components[2].components[0].setDisabled(false)
   } 
 }
 
