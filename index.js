@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 12
+const buildNum = 13
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -407,7 +407,7 @@ client.on("interactionCreate", async interaction => {
         }) .catch((err) => {
           console.log(err)
         })
-        chckIsPostAvail()
+        checkifpostable(interaction)
         interaction.deferUpdate();
       break;
 
@@ -469,7 +469,7 @@ client.on("interactionCreate", async interaction => {
       case "aflight destination":
         let dest = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + dest + " for a destination for an announcement!")
-        chckIsPostAvail()
+        checkifpostable(interaction)
         interaction.deferUpdate();
       break;
     }
