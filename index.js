@@ -6,12 +6,12 @@ const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb.net/?retryWrites=true&w=majority`
 
 //BUILD SETTINGS
-const devBuild = false
+const devBuild = true
 const buildNum = 35
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
-const SendTestAnnouncements = false //Send Announcements as a 'test announcement', which pings @here and states it is a test.
+const SendTestAnnouncements = true //Send Announcements as a 'test announcement', which pings @here and states it is a test.
 const minXpForLvlUp = 100 //Minimum XP required to level up.
 const lvlMultiplier = 1.3 //How much the minimum XP cap multiplies by on level up
 const minCoinReward = 5 //Minimum coins you get for leveling up
@@ -413,6 +413,8 @@ client.on("interactionCreate", async interaction => {
         //first ## = time num, second ## = dest num
         timesmNum = splitMsg[0].substring(1).trim(4)
         destsmNum = splitMsg[0].substring(4).trim(1)
+        console.log(splitMsg)
+        console.log("\n\n\n\n\n"+splitMsg[21])
         if (splitMsg[21] == "announcement.\nAdditional") {
           //additional info present, starts at 23
           console.log("additional info detected")
@@ -514,7 +516,7 @@ client.on("interactionCreate", async interaction => {
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
               } else {
-                console.log("wout ai")
+                console.log("wout ai\n" + splitMsg[21] + "!= announcement.\nAdditional")
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
               }
