@@ -24,71 +24,91 @@ module.exports = {
             .addOptions(
                 {
                 label: 'Now',
-                value: 'now',
+                value: '00now! Join up! (link in <#1007959104611946547>)',
                 },
                 {
                 label: '5 minutes',
-                value: '5m',
+                value: '01in 5 minutes',
                 },
                 {
                 label: '10 minutes',
-                value: '10m',
+                value: '02in 10 minutes',
                 },
                 {
                 label: '15 minutes',
-                value: '15m',
+                value: '03in 15 minutes',
                 },
                 {
                 label: '20 minutes',
-                value: '20m',
+                value: '04in 20 minutes',
                 },
                 {
                 label: '25 minutes',
-                value: '25m',
+                value: '05in 25 minutes',
                 },
                 {
                 label: '30 minutes',
-                value: '30m',
+                value: '06in 30 minutes',
+                },
+                {
+                label: '35 minutes',
+                value: '07in 35 minutes',
+                },
+                {
+                label: '40 minutes',
+                value: '08in 40 minutes',
                 },
                 {
                 label: '45 minutes',
-                value: '45m',
+                value: '09in 45 minutes',
+                },
+                {
+                label: '50 minutes',
+                value: '10in 50 minutes',
+                },
+                {
+                label: '55 minutes',
+                value: '11in 55 minutes',
                 },
                 {
                 label: '1 hour',
-                value: '1h',
+                value: '12in 1 hour',
                 },
                 {
                 label: '1 hour and 15 minutes',
-                value: '1h15m',
+                value: '13in 1 hour and 15 minutes',
                 },
                 {
                 label: '1 hour and 30 minutes',
-                value: '1h30m',
+                value: '14in 1 hour and 30 minutes',
                 },
                 {
                 label: '1 hour and 45 minutes',
-                value: '1h45m',
+                value: '15in 1 hour and 45 minutes',
                 },
                 {
                 label: '2 hours',
-                value: '2h',
+                value: '16in 2 hours',
+                },
+                {
+                label: '2 hours and 30 minutes',
+                value: '17in 2 hours and 30 minutes',
                 },
                 {
                 label: '3 hours',
-                value: '3h',
+                value: '18in 3 hours',
                 },
                 {
                 label: '4 hours',
-                value: '4h',
+                value: '19in 4 hours',
                 },
                 {
                 label: '5 hours',
-                value: '5h',
+                value: '20in 5 hours',
                 },
                 {
                 label: '6 hours',
-                value: '6h',
+                value: '21in 6 hours',
                 },
             ),
             );
@@ -100,11 +120,11 @@ module.exports = {
             .addOptions(
                 {
                 label: 'N/A',
-                value: 'unknown',
+                value: '00N/A',
                 },
                 {
                 label: 'Robloxia Town',
-                value: 'Robloxia Town',
+                value: '01Robloxia Town',
                 },
             ),
             );
@@ -133,14 +153,14 @@ module.exports = {
             }
 
             if (message.guild != null) {
-            member.send( {content: "You did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.\nAdditional info: `" + addinfo + "`", components: [row, row2, row3cantpost]} ) .then(() => {
+            member.send( {content: "(##,##) \n\nYou did the command `.flight announce` in `Jet2 Communications Server`.\nPlease select the time frame below to send your flight announcement.\nAdditional info: `" + addinfo + "`", components: [row, row2, row3cantpost]} ) .then(() => {
                 message.delete()
             }) .catch((err) => {
                 message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
                 console.log(err)
             })
             } else {
-            member.send( {content: "You did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.\nAdditional info: `" + addinfo + "`", components: [row, row2, row3cantpost]} ) .catch((err) => {
+            member.send( {content: "(##,##) \n\nYou did the command `.flight announce` in `DMs`.\nPlease select the time frame below to send your flight announcement.\nAdditional info: `" + addinfo + "`", components: [row, row2, row3cantpost]} ) .catch((err) => {
                 message.reply("You cannot recieve a DM from me to set-up a flight announcement. This may be because your discord account does not support DMs from me or that you have blocked me.\nHowever, there could be a bug preventing me from allowing you to send an announcement form.")
             })
             }

@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 19
+const buildNum = 20
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -50,6 +50,11 @@ for(const file of commandFiles){
 
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+function setCharAt(str,index,chr) {
+  if(index > str.length-1) return str;
+  return str.substring(0,index) + chr + str.substring(index+1);
 }
 
 const addLevel = async (guildId, userId, cLevel) => {
@@ -310,6 +315,12 @@ client.on("interactionCreate", async interaction => {
         //aflight select menu for timeframe of flight
         let time = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + time + " for the time for an announcement!")
+        let numaa = dest.slice(0, 1)
+        let numbb = dest.slice(1, 2)
+        let nnewMsg = interaction.message.content
+        nnewMsg = setCharAt(nnewMsg, 1, numaa)
+        nnewMsg = setCharAt(nnewMsg, 2, numbb)
+        interaction.message.edit(nnewMsg)
         interaction.deferUpdate();
       break;
 
@@ -371,6 +382,12 @@ client.on("interactionCreate", async interaction => {
       case "aflight destination":
         let dest = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + dest + " for a destination for an announcement!")
+        let numa = dest.slice(0, 1)
+        let numb = dest.slice(1, 2)
+        let newMsg = interaction.message.content
+        newMsg = setCharAt(newMsg, 5, numa)
+        newMsg = setCharAt(newMsg, 6, numb)
+        interaction.message.edit(newMsg)
         interaction.deferUpdate();
       break;
     }
@@ -387,15 +404,34 @@ client.on("interactionCreate", async interaction => {
         let timeofflight = "undefined"
         let destofflight = "undefined"
 
+        let timesmNum = 0
+        let destsmNum = 0
+
+        let msg = interaction.message
+        let splitMsg = msg.content.split(" ")
+        //args[1] = (##,##)
+        //first ## = time num, second ## = dest num
+        timesmNum = splitMsg[0].substring(1).trim(4)
+        destsmNum = splitMsg[0].substring(4).trim(1)
+        if (timesmNum.startsWith("0")) timesmNum.substring(1)
+        if (destsmNum.startsWith("0")) destsmNum.substring(1)
+        
+        if (timesmNum.startsWith("#") || destsmNum.startsWith("#")) {
+          return interaction.reply("You need to specify a time AND destination to be able to post!")
+        }
+
+        timesmNum = parseInt(timesmNum)
+        destsmNum = parseInt(destsmNum)
+
         function docomponentstuffs(row, idx, allrows) {
           if (idx == 0) {
             //First row, time row
             let selectMenu = row.components[0]
-            timeofflight = selectMenu.options[0].label
+            timeofflight = selectMenu.options[timesmNum].value
           } else if (idx == 1) {
             //Second row, dest row
             let selectMenu = row.components[0]
-            destofflight = selectMenu.options[0].label
+            destofflight = selectMenu.options[destsmNum].value
           } else if (idx == 2) {
             //Third row, Post and cancel buttons row
             //we dont really need these.
