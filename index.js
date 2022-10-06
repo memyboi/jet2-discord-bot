@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 24
+const buildNum = 25
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -186,11 +186,11 @@ client.on("messageCreate", async message => {
       break;
 
       case 'flight':
-        client.commands.get('flight').execute(message, args, client);
+        client.commands.get('flight').execute(message, args, client, lowerargs);
       break;
 
       case 'f':
-        client.commands.get('flight').execute(message, args, client);
+        client.commands.get('flight').execute(message, args, client, lowerargs);
       break;
 
       case 'givexp':
@@ -403,9 +403,10 @@ client.on("interactionCreate", async interaction => {
       case "postAnn":
         let timeofflight = "undefined"
         let destofflight = "undefined"
-
+        let additionalinfo = null
         let timesmNum = 0
         let destsmNum = 0
+        let sendadditionalinfo = false
 
         let msg = interaction.message
         let splitMsg = msg.content.split(" ")
@@ -413,6 +414,21 @@ client.on("interactionCreate", async interaction => {
         //first ## = time num, second ## = dest num
         timesmNum = splitMsg[0].substring(1).trim(4)
         destsmNum = splitMsg[0].substring(4).trim(1)
+        if (args[21] == "Additional") {
+          //additional info present, starts at 23
+          let addArgs = args
+          const skiptillmessage = 22
+          var counter = 0
+          while (counter < skiptillmessage) {
+            addArgs.shift()
+            counter++
+          }
+          //info begins at 1 of addArgs
+          additionalinfo = addArgs.join(" ")
+          additionalinfo.substring(3)
+          additionalinfo.trim(3)
+          sendadditionalinfo = true
+        }
         if (timesmNum.startsWith("0")) timesmNum.substring(1)
         if (destsmNum.startsWith("0")) destsmNum.substring(1)
         
@@ -441,6 +457,8 @@ client.on("interactionCreate", async interaction => {
 
         timeofflight = timeofflight.substring(2)
         destofflight = destofflight.substring(2)
+        
+
 
         //post announcement form to flight-announcements
         client.guilds.fetch("" + process.env.guildid) .then((guild) => {
@@ -459,6 +477,17 @@ client.on("interactionCreate", async interaction => {
                   { name: "Where is it going to?", value: destofflight, inline: false },
                 )
                 .setTimestamp()
+              const testAnnouncementEmbedWAI = new EmbedBuilder()
+                .setColor('#ff0000')
+                .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
+                .addFields(
+                  { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+                  { name: "Where is it going to?", value: destofflight, inline: false },
+                  { name: "Aditional info:", value: additionalinfo, inline: false },
+                )
+                .setTimestamp()
               const announcementEmbed = new EmbedBuilder()
                 .setColor('#ff0000')
                 .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
@@ -469,8 +498,25 @@ client.on("interactionCreate", async interaction => {
                   { name: "Where is it going to?", value: destofflight, inline: false },
                 )
                 .setTimestamp()
-              if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
-              if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
+              const announcementEmbedWAI = new EmbedBuilder()
+                .setColor('#ff0000')
+                .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
+                .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                .setDescription('This is an announcement for a flight!')
+                .addFields(
+                  { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+                  { name: "Where is it going to?", value: destofflight, inline: false },
+                  { name: "Aditional info:", value: additionalinfo, inline: false },
+                )
+                .setTimestamp()
+              if (sendadditionalinfo) {
+                if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
+                if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
+              } else {
+                if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
+                if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
+              }
+              
             }
           })
         })
