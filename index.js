@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 18
+const buildNum = 19
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -64,6 +64,26 @@ const addLevel = async (guildId, userId, cLevel) => {
       $inc: {
         level: 1,
         coins: getRandomArbitrary(minCoinReward, maxCoinReward) * (lvlRewardMultiplier * cLevel)
+      }
+    }, {
+      upsert: true,
+      new: true
+    })
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+const addXP = async (guildId, userId, xpToAdd) => {
+  try {
+    const result = await xpSchema.findOneAndUpdate({
+      guildId,
+      userId
+    }, {
+      guildId,
+      userId,
+      $inc: {
+        xp: xpToAdd
       }
     }, {
       upsert: true,
