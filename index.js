@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 35
+const buildNum = 36
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -415,7 +415,7 @@ client.on("interactionCreate", async interaction => {
         destsmNum = splitMsg[0].substring(4).trim(1)
         console.log(splitMsg)
         console.log("\n\n\n\n\n"+splitMsg[21])
-        if (splitMsg[21] == "announcement.\nAdditional") {
+        if (splitMsg[20] == "announcement.\nAdditional") {
           //additional info present, starts at 23
           console.log("additional info detected")
           let addArgs = splitMsg
