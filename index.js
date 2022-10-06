@@ -413,7 +413,7 @@ client.on("interactionCreate", async interaction => {
         //first ## = time num, second ## = dest num
         timesmNum = splitMsg[0].substring(1).trim(4)
         destsmNum = splitMsg[0].substring(4).trim(1)
-        if (splitMsg[21] == "announcement.\nAdditional") {
+        if (splitMsg[20] == "announcement.\nAdditional") {
           //additional info present, starts at 23
           console.log("additional info detected")
           let addArgs = splitMsg
