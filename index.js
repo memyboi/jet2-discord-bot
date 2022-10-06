@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 16
+const buildNum = 17
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -50,47 +50,6 @@ for(const file of commandFiles){
 
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
-}
-
-function checkifpostable(interaction) {
-  let chckNum = 0
-  let row1
-  let row2
-
-  let row3 = new ActionRowBuilder()
-    .addComponents(
-        new ButtonBuilder()
-            .setCustomId('postAnn')
-            .setLabel('Post Announcement')
-            .setStyle(ButtonStyle.Success),
-        new ButtonBuilder()
-            .setCustomId('cancelAnn')
-            .setLabel('Cancel Announcement')
-            .setStyle(ButtonStyle.Danger)
-    )
-
-  function chckIsPostAvail(row, idx, allrows) { //if 2, available, if 1 / 0, not
-    if (idx == 0) {
-      let selectMenu = row.components[0]
-      chckNum++;
-      console.log(selectMenu.option.value)
-      row1 = row
-    } else if (idx == 1) {
-      let selectMenu = row.components[0]
-      console.log(selectMenu)
-      if (chckNum == 1 && selectMenu.disabled == true) {
-        //undisable selectMenu
-      } else if (selectMenu.disabled == false) {
-        chckNum++;
-      }
-      
-      row2 = row
-    }
-  }
-  interaction.message.components.forEach(chckIsPostAvail)
-  if (chckNum == 2) {
-    interaction.message.components[2].components[0].setDisabled(false)
-  } 
 }
 
 const addLevel = async (guildId, userId, cLevel) => {
@@ -331,7 +290,6 @@ client.on("interactionCreate", async interaction => {
         //aflight select menu for timeframe of flight
         let time = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + time + " for the time for an announcement!")
-        checkifpostable(interaction)
         interaction.deferUpdate();
       break;
 
@@ -393,7 +351,6 @@ client.on("interactionCreate", async interaction => {
       case "aflight destination":
         let dest = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + dest + " for a destination for an announcement!")
-        checkifpostable(interaction)
         interaction.deferUpdate();
       break;
     }
@@ -414,11 +371,11 @@ client.on("interactionCreate", async interaction => {
           if (idx == 0) {
             //First row, time row
             let selectMenu = row.components[0]
-            timeofflight = selectMenu.values[0]
+            timeofflight = selectMenu.options[0].label
           } else if (idx == 1) {
             //Second row, dest row
             let selectMenu = row.components[0]
-            destofflight = selectMenu.values[0]
+            destofflight = selectMenu.options[0].label
           } else if (idx == 2) {
             //Third row, Post and cancel buttons row
             //we dont really need these.

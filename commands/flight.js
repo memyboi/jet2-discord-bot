@@ -97,7 +97,6 @@ module.exports = {
             new SelectMenuBuilder()
             .setCustomId('aflight destination')
             .setPlaceholder('No destination selected')
-            .setDisabled(true)
             .addOptions(
                 {
                 label: 'N/A',
@@ -115,8 +114,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setCustomId('postAnn')
                     .setLabel('Post Announcement')
-                    .setStyle(ButtonStyle.Success)
-                    .setDisabled(true),
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId('cancelAnn')
                     .setLabel('Cancel Announcement')
