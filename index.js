@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 28
+const buildNum = 29
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -508,9 +508,11 @@ client.on("interactionCreate", async interaction => {
                 )
                 .setTimestamp()
               if (additionalinfo != null) {
+                console.log("wai")
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
               } else {
+                console.log("wout ai")
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
               }
