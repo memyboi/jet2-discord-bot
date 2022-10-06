@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb.net/?retryWrites=true&w=majority`
 
 //BUILD SETTINGS
-const devBuild = true
+const devBuild = false
 const buildNum = 37
 
 //SETTINGS
