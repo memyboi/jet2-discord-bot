@@ -406,7 +406,7 @@ client.on("interactionCreate", async interaction => {
                 .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
                 .setDescription('This is an announcement for a flight!')
                 .addFields(
-                  { name: "When is it happening?", value: "Happening " + time + "!", inline: false },
+                  { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
                   { name: "Where is it going to?", value: destofflight, inline: false },
                 )
                 .setTimestamp()
