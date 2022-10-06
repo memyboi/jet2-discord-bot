@@ -6,8 +6,8 @@ const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb.net/?retryWrites=true&w=majority`
 
 //BUILD SETTINGS
-const devBuild = false
-const buildNum = 34
+const devBuild = true
+const buildNum = 35
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
