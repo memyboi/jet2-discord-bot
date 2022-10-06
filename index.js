@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 29
+const buildNum = 30
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -413,7 +413,7 @@ client.on("interactionCreate", async interaction => {
         //first ## = time num, second ## = dest num
         timesmNum = splitMsg[0].substring(1).trim(4)
         destsmNum = splitMsg[0].substring(4).trim(1)
-        if (splitMsg[21] == "Additional") {
+        if (splitMsg[20] == "Additional") {
           //additional info present, starts at 23
           let addArgs = splitMsg
           const skiptillmessage = 22
@@ -426,6 +426,7 @@ client.on("interactionCreate", async interaction => {
           additionalinfo = addArgs.join(" ")
           additionalinfo.substring(3)
           additionalinfo.trim(3)
+          console.log(additionalinfo)
         }
         if (timesmNum.startsWith("0")) timesmNum.substring(1)
         if (destsmNum.startsWith("0")) destsmNum.substring(1)
@@ -509,7 +510,6 @@ client.on("interactionCreate", async interaction => {
                 .setTimestamp()
               if (additionalinfo != null) {
                 console.log("wai")
-                console.log(additionalinfo)
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
               } else {
