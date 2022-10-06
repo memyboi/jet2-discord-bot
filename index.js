@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 26
+const buildNum = 27
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -485,7 +485,7 @@ client.on("interactionCreate", async interaction => {
                 .addFields(
                   { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
                   { name: "Where is it going to?", value: destofflight, inline: false },
-                  { name: "Aditional info:", value: additionalinfo, inline: false },
+                  { name: "Aditional info:", value: "" + additionalinfo, inline: false },
                 )
                 .setTimestamp()
               const announcementEmbed = new EmbedBuilder()
@@ -506,7 +506,7 @@ client.on("interactionCreate", async interaction => {
                 .addFields(
                   { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
                   { name: "Where is it going to?", value: destofflight, inline: false },
-                  { name: "Aditional info:", value: additionalinfo, inline: false },
+                  { name: "Aditional info:", value: "" + additionalinfo, inline: false },
                 )
                 .setTimestamp()
               if (sendadditionalinfo) {
