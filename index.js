@@ -7,11 +7,11 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 36
+const buildNum = 37
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
-const SendTestAnnouncements = true //Send Announcements as a 'test announcement', which pings @here and states it is a test.
+const SendTestAnnouncements = false //Send Announcements as a 'test announcement', which pings @here and states it is a test.
 const minXpForLvlUp = 100 //Minimum XP required to level up.
 const lvlMultiplier = 1.3 //How much the minimum XP cap multiplies by on level up
 const minCoinReward = 5 //Minimum coins you get for leveling up
