@@ -509,6 +509,7 @@ client.on("interactionCreate", async interaction => {
                 .setTimestamp()
               if (additionalinfo != null) {
                 console.log("wai")
+                console.log(additionalinfo)
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
               } else {
