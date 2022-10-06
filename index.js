@@ -6,12 +6,12 @@ const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb.net/?retryWrites=true&w=majority`
 
 //BUILD SETTINGS
-const devBuild = true
-const buildNum = 33
+const devBuild = false
+const buildNum = 34
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
-const SendTestAnnouncements = true //Send Announcements as a 'test announcement', which pings @here and states it is a test.
+const SendTestAnnouncements = false //Send Announcements as a 'test announcement', which pings @here and states it is a test.
 const minXpForLvlUp = 100 //Minimum XP required to level up.
 const lvlMultiplier = 1.3 //How much the minimum XP cap multiplies by on level up
 const minCoinReward = 5 //Minimum coins you get for leveling up
