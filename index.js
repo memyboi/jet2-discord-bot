@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 15
+const buildNum = 16
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -72,14 +72,14 @@ function checkifpostable(interaction) {
   function chckIsPostAvail(row, idx, allrows) { //if 2, available, if 1 / 0, not
     if (idx == 0) {
       let selectMenu = row.components[0]
-      console.log(selectMenu)
       chckNum++;
+      console.log(selectMenu.option.value)
       row1 = row
     } else if (idx == 1) {
       let selectMenu = row.components[0]
       console.log(selectMenu)
       if (chckNum == 1 && selectMenu.disabled == true) {
-        selectMenu.setDisabled(false);
+        //undisable selectMenu
       } else if (selectMenu.disabled == false) {
         chckNum++;
       }
@@ -329,87 +329,8 @@ client.on("interactionCreate", async interaction => {
     switch(interaction.customId){
       case "aflight timeframe":
         //aflight select menu for timeframe of flight
-        interaction.message.edit({
-          content: "This `.flight announce` command has been used. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce another flight.\nOption: " + interaction.values[0],
-          components: []
-        }) .then((msg) => {
-          let time = "error: time unspecified"
-          switch(interaction.values[0]){
-            case "now":
-              time = "now! Join up *(link in <#1007959104611946547>)*"
-            break;
-
-            case "5m":
-              time = "in 5 minutes"
-            break;
-              
-            case "10m":
-              time = "in 10 minutes"
-            break;
-              
-            case "15m":
-              time = "in 15 minutes"
-            break;
-
-            case "20m":
-              time = "in 20 minutes"
-            break;
-
-            case "25m":
-              time = "in 25 minutes"
-            break;
-
-            case "30m":
-              time = "in 30 minutes"
-            break;
-
-            case "45m":
-              time = "in 45 minutes"
-            break;
-              
-            case "1h":
-              time = "in 1 hour"
-            break;
-
-            case "1h15m":
-              time = "in 1 hour and 15 minutes"
-            break;
-              
-            case "1h30m":
-              time = "in 1 hour and 30 minutes"
-            break;
-
-            case "1h45m":
-              time = "in 1 hour and 45 minutes"
-            break;
-
-            case "2h":
-              time = "in 2 hours"
-            break;
-
-            case "3h":
-              time = "in 3 hours"
-            break;
-
-            case "4h":
-              time = "in 4 hours"
-            break;
-              
-            case "5h":
-              time = "in 5 hours"
-            break;
-
-            case "6h":
-              time = "in 6 hours"
-            break;
-          }
-          
-          console.log("" + interaction.user.tag + " selected " + time + " for the time for an announcement!")
-
-          
-        }) .catch((err) => {
-          console.log(err)
-        })
+        let time = interaction.values[0]
+        console.log("" + interaction.user.tag + " selected " + time + " for the time for an announcement!")
         checkifpostable(interaction)
         interaction.deferUpdate();
       break;
