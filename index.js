@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 21
+const buildNum = 22
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -471,6 +471,14 @@ client.on("interactionCreate", async interaction => {
             }
           })
         })
+        interaction.message.edit(
+          {
+            content: "This `.flight announce` command has been used. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce another flight.",
+            components: [],
+            embeds: []
+          }
+          )
+        interaction.deferUpdate()
       break;
     }
   }
