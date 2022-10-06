@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 20
+const buildNum = 21
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -315,8 +315,8 @@ client.on("interactionCreate", async interaction => {
         //aflight select menu for timeframe of flight
         let time = interaction.values[0]
         console.log("" + interaction.user.tag + " selected " + time + " for the time for an announcement!")
-        let numaa = dest.slice(0, 1)
-        let numbb = dest.slice(1, 2)
+        let numaa = time.slice(0, 1)
+        let numbb = time.slice(1, 2)
         let nnewMsg = interaction.message.content
         nnewMsg = setCharAt(nnewMsg, 1, numaa)
         nnewMsg = setCharAt(nnewMsg, 2, numbb)
@@ -385,8 +385,8 @@ client.on("interactionCreate", async interaction => {
         let numa = dest.slice(0, 1)
         let numb = dest.slice(1, 2)
         let newMsg = interaction.message.content
-        newMsg = setCharAt(newMsg, 5, numa)
-        newMsg = setCharAt(newMsg, 6, numb)
+        newMsg = setCharAt(newMsg, 4, numa)
+        newMsg = setCharAt(newMsg, 5, numb)
         interaction.message.edit(newMsg)
         interaction.deferUpdate();
       break;
