@@ -7,7 +7,7 @@ const url = `mongodb+srv://${musername}:${mpassword}@jet2-bot-db.vzm6jkt.mongodb
 
 //BUILD SETTINGS
 const devBuild = true
-const buildNum = 22
+const buildNum = 23
 
 //SETTINGS
 const SendAnnInEmbed = true //Send Announcements in Embeds or not
@@ -438,6 +438,9 @@ client.on("interactionCreate", async interaction => {
           }
         }
         interaction.message.components.forEach(docomponentstuffs)
+
+        timeofflight = timeofflight.content.substring(2)
+        destofflight = destofflight.content.substring(2)
 
         //post announcement form to flight-announcements
         client.guilds.fetch("" + process.env.guildid) .then((guild) => {
