@@ -127,42 +127,6 @@ module.exports = {
                 value: '25in 8 hours',
                 },
                 {
-                label: '9 hours',
-                value: '26in 9 hours',
-                },
-                {
-                label: '10 hours',
-                value: '27in 10 hours',
-                },
-                {
-                label: '11 hours',
-                value: '28in 11 hours',
-                },
-                {
-                label: '12 hours',
-                value: '29in 12 hours',
-                },
-                {
-                label: '13 hours',
-                value: '30in 13 hours',
-                },
-                {
-                label: '14 hours',
-                value: '31in 14 hours',
-                },
-                {
-                label: '15 hours',
-                value: '32in 15 hours',
-                },
-                {
-                label: '20 hours',
-                value: '33in 20 hours',
-                },
-                {
-                label: '22 hours',
-                value: '34in 22 hours',
-                },
-                {
                 label: 'Tomorrow (24 hours)',
                 value: '35tommorow (24 hours)',
                 },
