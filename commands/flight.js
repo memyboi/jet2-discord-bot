@@ -305,6 +305,7 @@ module.exports = {
       }, commandDelay * 1000);
       }) .catch((err) => {
         message.reply("There was an error doing `.flight`.\n**You may have to type something in the `Jet2 Communications Server` before you do `.flight` if this was a DM command.**\nThis is because the bot needs to store the cache of the guild. Sorry!\n\nTechnical details:```" + err + "```")
+        console.log(err)
       })
     }
   }
