@@ -414,8 +414,9 @@ client.on("interactionCreate", async interaction => {
         timesmNum = splitMsg[0].substring(1).trim(4)
         destsmNum = splitMsg[0].substring(4).trim(1)
         console.log(splitMsg)
-        console.log("\n\n\n\n\n"+splitMsg[21])
-        if (splitMsg[20] == "announcement.\nAdditional") {
+        console.log("\n\n\n\n\njet2:\n"+splitMsg[20])
+        console.log("\n\n\n\n\ndms:\n"+splitMsg[18])
+        if (splitMsg[20] == "announcement.\nAdditional" && splitMsg[9] == "`Jet2" || splitMsg[18] == "announcement.\nAdditional" && splitMsg[9] == "`DMs`.\nPlease") {
           //additional info present, starts at 23
           console.log("additional info detected")
           let addArgs = splitMsg
@@ -516,7 +517,6 @@ client.on("interactionCreate", async interaction => {
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
               } else {
-                console.log("wout ai\n" + splitMsg[21] + "!= announcement.\nAdditional")
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
               }
