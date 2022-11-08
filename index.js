@@ -41,6 +41,9 @@ const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle
 const { AttachmentBuilder } = require('discord.js')
 const Canvas = require('@napi-rs/canvas');
 
+const discordModals = require("discord-modals")
+discordModals(client)
+
 
 client.commands = new Discord.Collection();
 
