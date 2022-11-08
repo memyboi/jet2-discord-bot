@@ -529,7 +529,7 @@ client.on("interactionCreate", async interaction => {
           SendMessages: true,
           UseApplicationCommands: true,
         }) .then(() => {
-          const embed = EmbedBuilder()
+          const embed = new EmbedBuilder()
             .setTitle("Ticket by "+interaction.user.username)
             .setDescription(`***${interaction.fields.getTextInputValue('inquirytitle')}***
             ${interaction.fields.getTextInputValue('inquitydesc')}`)
