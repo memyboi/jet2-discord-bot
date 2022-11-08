@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const talkedRecently = new Set();
 const commandDelay = 1 //seconds 
 
