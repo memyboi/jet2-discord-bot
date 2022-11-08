@@ -518,9 +518,12 @@ client.on("interactionCreate", async interaction => {
   if (interaction.isModalSubmit()) {
     if (interaction.customId == "iquiryset") {
       const catergory = '1039252815643693106'
+      const title = interaction.fields.getTextInputValue('inquirytitle')
+      const desc = interaction.fields.getTextInputValue('inquitydesc')
+      const type = "undefined"
       interaction.guild.channels.create({
         type: ChannelType.GuildText,
-        name: interaction.fields.getTextInputValue('inquirytitle'),
+        name: title,
         parent: catergory,
       }) .then((channel) => {
         channel.permissionOverwrites.create(interaction.user, {
@@ -530,9 +533,11 @@ client.on("interactionCreate", async interaction => {
           UseApplicationCommands: true,
         }) .then(() => {
           const embed = new EmbedBuilder()
-            .setTitle("Ticket by "+interaction.user.username)
-            .setDescription(`***${interaction.fields.getTextInputValue('inquirytitle')}***
-            ${interaction.fields.getTextInputValue('inquitydesc')}`)
+            .setTitle(`${title}`)
+            .setDescription(`**This is a ticket by ${interaction.user.username}**
+            This ticket is ${type}
+
+            ${desc}`)
             .setColor("0x000000")
 
             channel.send({content: "", embeds: [embed]})
@@ -542,6 +547,7 @@ client.on("interactionCreate", async interaction => {
         })
       })
     }
+    interaction.deferUpdate()
   }
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
     const command = interaction.client.commands.get(interaction.commandName);
