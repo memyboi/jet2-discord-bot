@@ -3,8 +3,6 @@ const { Modal, TextInputComponent, SelectMenuComponent, showModal } = require('d
 const talkedRecently = new Set();
 const commandDelay = 2 //hour 
 
-const { Modal } = require('discord-modals'); // Modal class
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ticket')
