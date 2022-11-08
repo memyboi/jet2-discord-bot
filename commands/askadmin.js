@@ -37,8 +37,9 @@ module.exports = {
           .setRequired(true);
       
         const row = new ActionRowBuilder().addComponents(txt);
+        const row2 = new ActionRowBuilder().addComponents(desc);
       
-        modal.addComponents(row);
+        modal.addComponents(row, row2);
       
         await interaction.showModal(modal);
         talkedRecently.add(interaction.user.id);
