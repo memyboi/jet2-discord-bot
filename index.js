@@ -36,16 +36,66 @@ const client = new Client({
   ]
 });
 const fs = require('fs');
+const path = require('path');
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js')
+const Canvas = require('@napi-rs/canvas');
 
 
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for(const file of commandFiles){
-  const command = require(`./commands/${file}`);
+const commandsPath = path.join(__dirname, 'commands');
 
-  client.commands.set(command.name, command)
+const { Routes } = require('discord.js');
+const { REST } = require("@discordjs/rest")
+const clientId = "1021122838163365969"
+const guildId = process.env.guildid
+const token = process.env.token
+
+const commands = [];
+// Grab all the command files from the commands directory you created earlier
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  commands.push(command.data.toJSON());
+}
+
+console.log(REST)
+
+// Construct and prepare an instance of the REST module
+const rest = new REST({ version: '10' }).setToken(token);
+
+// and deploy your commands!
+(async () => {
+  try {
+    console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+    console.log(commands)
+
+    // The put method is used to fully refresh all commands in the guild with the current set
+    const data = await rest.put(
+      Routes.applicationGuildCommands(clientId, guildId),
+      { body: commands },
+    );
+
+    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+  } catch (error) {
+    // And of course, make sure you catch and log any errors!
+    console.error(error);
+  }
+})();
+
+for (const file of commandFiles) {
+	const filePath = path.join(commandsPath, file);
+	const command = require(filePath);
+	// Set a new item in the Collection with the key as the command name and the value as the exported module
+	if ('data' in command && 'execute' in command) {
+		client.commands.set(command.data.name, command);
+	} else {
+		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+	}
 }
 
 function getRandomArbitrary(min, max) {
@@ -535,16 +585,51 @@ client.on("interactionCreate", async interaction => {
       break;
     }
   }
+  if (interaction.isCommand() || interaction.isChatInputCommand()) {
+    const command = interaction.client.commands.get(interaction.commandName);
+
+    if (!command) {
+      console.error(`No command matching ${interaction.commandName} was found.`);
+      return;
+    }
+
+    try {
+      await command.execute(interaction, client);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+    }
+  }
 })
 
-client.on("guildMemberAdd", function(member){
-  console.log(member)
-  client.commands.get('guildmemberadd').execute(member, client);
+client.on("guildMemberAdd", async function(member){
+  const canvas = Canvas.createCanvas(800, 500);
+    const context = canvas.getContext('2d');
+    const bg = await Canvas.loadImage('./images/joinbg.PNG')
+    const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
+    context.fillstyle = '#FFFFFF'
+    context.font = '40px arial'
+    let text = "" + member.user.tag
+    
+    context.drawImage(bg, 0, 0, canvas.width, canvas.height)
+    context.drawImage(pfp, 175, 300, 75, 75)
+    context.fillText(text, 250, 350)
+
+    const newimg = new AttachmentBuilder(await canvas.encode('png'), { name: 'join-image.png' })
+    client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+      guild.channels.fetch("" + process.env.welcomechannelid) .then((channel) => {
+        channel.send({ files: [newimg] })
+        member.send("**Welcome abroad!**\n\nHello, " + member.user.tag + "! Welcome to the Jet2 Communications Server!\nHere, you'll recieve notifications on upcoming flights and get asked if we should host a flight!\nWe hope you have a good time whilst here!")
+      })
+    })
 })
 
 client.on("guildMemberRemove", function(member){
-  console.log(member)
-  client.commands.get('guildmemberremove').execute(member, client);
+  client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+    guild.channels.fetch("" + process.env.leavingchannelid) .then((channel) => {
+      channel.send("_Bye, _**" + member.user.tag + "!**_\nWe hope you had a great stay!_")
+    })
+  })
 })
 
 client.login(process.env.token)
