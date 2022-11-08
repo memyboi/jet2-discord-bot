@@ -59,7 +59,7 @@ module.exports = {
               value: "reporting a bug"
             },
           )
-          .setRequired
+          .setRequired(true);
       
         const row = new ActionRowBuilder().addComponents(txt);
         const row2 = new ActionRowBuilder().addComponents(desc);
