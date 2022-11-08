@@ -37,7 +37,7 @@ const client = new Client({
 });
 const fs = require('fs');
 const path = require('path');
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle, ChannelType } = require('discord.js');
 const { AttachmentBuilder } = require('discord.js')
 const Canvas = require('@napi-rs/canvas');
 
