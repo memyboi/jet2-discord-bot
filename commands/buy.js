@@ -41,7 +41,7 @@ module.exports = {
       let status = await availableTB(25)
       if (status == 0) {
         //buy
-        if (interaction.guild.members.cache.get(interaction.author.id).roles.cache.some(role => role.id === '1021523901500624946')) {
+        if (interaction.guild.members.cache.get(interaction.user.id).roles.cache.some(role => role.id === '1021523901500624946')) {
           //owns
           interaction.reply({content: "You already own this item!", ephemeral: true})
         } else {
