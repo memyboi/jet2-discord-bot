@@ -23,14 +23,14 @@ module.exports = {
           .setCustomId('iquiryset')
           .setTitle('Create a ticket...');
 
-        const txt = new TextInputComponent()
+        const txt = new TextInputBuilder()
           .setCustomId('inquirytitle')
           .setLabel("Title")
           .setStyle(TextInputStyle.Short)
           .setMaxLength(50)
           .setRequired(true);
 
-        const desc = new TextInputComponent()
+        const desc = new TextInputBuilder()
           .setCustomId('inquitydesc')
           .setLabel("Description")
           .setStyle(TextInputStyle.Paragraph)
