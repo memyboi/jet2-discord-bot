@@ -19,7 +19,7 @@ module.exports = {
 	async execute(interaction, client) {
     const xpSchema = require('../gainxp.js')
     async function availableTB(cost) { //available to buy
-      const findRes = await xpSchema.find({ userId: message.author.id, guildId: message.guild.id })
+      const findRes = await xpSchema.find({ userId: interaction.user.id, guildId: interaction.guild.id })
       try {
         let coins = findRes[0].coins
         if (coins >= cost) {
