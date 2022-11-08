@@ -188,162 +188,87 @@ const prefix = '.';
 client.on("messageCreate", async message => {
   if (!message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.guild != null) doXp(message)
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
-    let lowerargs = message.content.substring(prefix.length).toLowerCase().split(" ")
-    let args = message.content.substring(prefix.length).split(" ")
+    if (message.content == 'help') {
+      const helpEmbed = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Command help:")
+        .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+        .setDescription('Do ' + prefix + "help [1-5] for info about me!")
+        .setTimestamp()
+      
+      const helpEmbed1 = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Command help:")
+        .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+        .setDescription('' + prefix + "help page 1")
+        .addFields(
+          { name: "How do i gain xp up?", value: "You can gain xp by chatting! You get a minimum of 1 and a maximum of 5 XP when you chat! Using commands does not grant XP, however.", inline: false },
+          { name: "How do i level up?", value: "You can level up by gaining XP! Once you have a certain amount of XP, you will level up! You will also get a few Jet2 Points!", inline: false },
+          { name: "What do i do with Jet2 Points?", value: "You can do " + prefix + "shop for a menu of all the things you can buy with your Jet2 Points!", inline: false },
+        )
+        .setTimestamp()
 
-    switch(lowerargs[0]){
-      case 'roles':
-        client.commands.get('roles').execute(message, args, client);
-      break;
+      const helpEmbed2 = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Command help:")
+        .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+        .setDescription('' + prefix + "help page 2")
+        .addFields(
+          { name: prefix + client.commands.get('roles').name, value: client.commands.get('roles').description, inline: true },
+          { name: prefix + client.commands.get('stats').name, value: client.commands.get('stats').description, inline: true },
+          { name: prefix + client.commands.get('askadmin').name, value: client.commands.get('askadmin').description, inline: true },
+        )
+        .setTimestamp()
 
-      case 'aflight':
-        client.commands.get('aflight').execute(message, args, client);
-      break;
+      const helpEmbed3 = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Command help:")
+        .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+        .setDescription('' + prefix + "help page 3")
+        .addFields(
+          { name: prefix + client.commands.get('flight').name, value: client.commands.get('flight').description, inline: true },
+          { name: prefix + client.commands.get('aflight').name, value: client.commands.get('aflight').description, inline: true },
+          { name: prefix + client.commands.get('cancelflight').name, value: client.commands.get('cancelflight').description, inline: true },
+          { name: prefix + client.commands.get('askflight').name, value: client.commands.get('askflight').description, inline: true },
+        )
+        .setTimestamp()
 
-      case 'af':
-        client.commands.get('aflight').execute(message, args, client);
-      break;
+      const helpEmbed4 = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Command help:")
+        .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+        .setDescription('' + prefix + "help page 4")
+        .addFields(
+          { name: prefix + client.commands.get('givepoints').name, value: client.commands.get('givepoints').description, inline: true },
+          { name: prefix + client.commands.get('givexp').name, value: client.commands.get('givexp').description, inline: true },
+          { name: prefix + client.commands.get('givelevels').name, value: client.commands.get('givelevels').description, inline: true },
+        )
+        .setTimestamp()
 
-      case 'askflight':
-        client.commands.get('askflight').execute(message, args, client);
-      break;
+      const helpEmbed5 = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Command help:")
+        .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+        .setDescription('' + prefix + "help page 5")
+        .addFields(
+          { name: "Who created me?", value: "DeadFry42#5445", inline: true },
+          { name: "What is my purpose?", value: "My purpose is to assist with the Jet2 Staff! I may offer some things to passengers, too, but my priority is helping staff.", inline: true },
+        )
+        .setTimestamp()
 
-      case 'askf':
-        client.commands.get('askflight').execute(message, args, client);
-      break;
-
-      case 'cancelflight':
-        client.commands.get('cancelflight').execute(message, args, client);
-      break;
-
-      case 'cf':
-        client.commands.get('cancelflight').execute(message, args, client);
-      break;
-
-      case 'aa':
-        client.commands.get('askadmin').execute(message, args, client);
-      break;
-
-      case 'askadmin':
-        client.commands.get('askadmin').execute(message, args, client);
-      break;
-
-      case 'stats':
-        client.commands.get('stats').execute(message, args, client, xpSchema, lvlMultiplier, minXpForLvlUp);
-      break;
-
-      case 'buy':
-        client.commands.get('buy').execute(message, args, client, xpSchema, lowerargs);
-      break;
-
-      case 'shop':
-        client.commands.get('shop').execute(message, args, client);
-      break;
-
-      case 'flight':
-        client.commands.get('flight').execute(message, args, client, lowerargs);
-      break;
-
-      case 'f':
-        client.commands.get('flight').execute(message, args, client, lowerargs);
-      break;
-
-      case 'givexp':
-        client.commands.get('givexp').execute(message, args, client, xpSchema);
-      break;
-
-      case 'givepoints':
-        client.commands.get('givepoints').execute(message, args, client, xpSchema);
-      break;
-
-      case 'givelevels':
-        client.commands.get('givelevels').execute(message, args, client, xpSchema);
-      break;
-        
-      case 'help':
-        const helpEmbed = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('Do ' + prefix + "help [1-5] for info about me!")
-          .setTimestamp()
-        
-        const helpEmbed1 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 1")
-          .addFields(
-            { name: "How do i gain xp up?", value: "You can gain xp by chatting! You get a minimum of 1 and a maximum of 5 XP when you chat! Using commands does not grant XP, however.", inline: false },
-            { name: "How do i level up?", value: "You can level up by gaining XP! Once you have a certain amount of XP, you will level up! You will also get a few Jet2 Points!", inline: false },
-            { name: "What do i do with Jet2 Points?", value: "You can do " + prefix + "shop for a menu of all the things you can buy with your Jet2 Points!", inline: false },
-          )
-          .setTimestamp()
-
-        const helpEmbed2 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 2")
-          .addFields(
-            { name: prefix + client.commands.get('roles').name, value: client.commands.get('roles').description, inline: true },
-            { name: prefix + client.commands.get('stats').name, value: client.commands.get('stats').description, inline: true },
-            { name: prefix + client.commands.get('askadmin').name, value: client.commands.get('askadmin').description, inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed3 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 3")
-          .addFields(
-            { name: prefix + client.commands.get('flight').name, value: client.commands.get('flight').description, inline: true },
-            { name: prefix + client.commands.get('aflight').name, value: client.commands.get('aflight').description, inline: true },
-            { name: prefix + client.commands.get('cancelflight').name, value: client.commands.get('cancelflight').description, inline: true },
-            { name: prefix + client.commands.get('askflight').name, value: client.commands.get('askflight').description, inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed4 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 4")
-          .addFields(
-            { name: prefix + client.commands.get('givepoints').name, value: client.commands.get('givepoints').description, inline: true },
-            { name: prefix + client.commands.get('givexp').name, value: client.commands.get('givexp').description, inline: true },
-            { name: prefix + client.commands.get('givelevels').name, value: client.commands.get('givelevels').description, inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed5 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 5")
-          .addFields(
-            { name: "Who created me?", value: "DeadFry42#5445", inline: true },
-            { name: "What is my purpose?", value: "My purpose is to assist with the Jet2 Staff! I may offer some things to passengers, too, but my priority is helping staff.", inline: true },
-          )
-          .setTimestamp()
-
-        if (lowerargs[1] == "1") {
-          return message.reply({ embeds: [helpEmbed1]});
-        } else if (lowerargs[1] == "2") {
-          return message.reply({ embeds: [helpEmbed2]});
-        } else if (lowerargs[1] == "3") {
-          return message.reply({ embeds: [helpEmbed3]});
-        } else if (lowerargs[1] == "4") {
-          return message.reply({ embeds: [helpEmbed4]});
-        } else if (lowerargs[1] == "5") {
-          return message.reply({ embeds: [helpEmbed5]});
-        }
-        message.reply({ embeds: [helpEmbed]});
-      break;
+      if (lowerargs[1] == "1") {
+        return message.reply({ embeds: [helpEmbed1]});
+      } else if (lowerargs[1] == "2") {
+        return message.reply({ embeds: [helpEmbed2]});
+      } else if (lowerargs[1] == "3") {
+        return message.reply({ embeds: [helpEmbed3]});
+      } else if (lowerargs[1] == "4") {
+        return message.reply({ embeds: [helpEmbed4]});
+      } else if (lowerargs[1] == "5") {
+        return message.reply({ embeds: [helpEmbed5]});
+      }
+      message.reply({ embeds: [helpEmbed]});
     }
-  } else {
-    if (message.author.bot) return;
   }
 })
 
@@ -588,6 +513,34 @@ client.on("interactionCreate", async interaction => {
           )
         interaction.deferUpdate()
       break;
+    }
+  }
+  if (interaction.isModalSubmit()) {
+    if (interaction.customId == "iquiryset") {
+      const catergory = '1039252815643693106'
+      interaction.guild.channels.create({
+        type: ChannelType.GuildText,
+        name: interaction.fields.getTextInputValue('inquirytitle'),
+        parent: catergory,
+      }) .then((channel) => {
+        channel.permissionOverwrites.create(interaction.user, {
+          ViewChannel: true,
+          ReadMessageHistory: true,
+          SendMessages: true,
+          UseApplicationCommands: true,
+        }) .then(() => {
+          const embed = EmbedBuilder()
+            .setTitle("Ticket by "+interaction.user.username)
+            .setDescription(`***${interaction.fields.getTextInputValue('inquirytitle')}***
+            ${interaction.fields.getTextInputValue('inquitydesc')}`)
+            .setColor("0x000000")
+
+            channel.send({content: "", embeds: [embed]})
+          savepersonalchatid(channel.id, interaction.user.id)
+        }) .catch((err) => {
+          console.log(err)
+        })
+      })
     }
   }
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
