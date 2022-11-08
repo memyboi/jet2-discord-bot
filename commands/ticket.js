@@ -37,7 +37,7 @@ module.exports = {
           .setMaxLength(500)
           .setRequired(true);
 
-        const type = new SelectMenuComponent()
+        const type = new SelectMenuBuilder()
           .setCustomId('inquirytype')
           .setPlaceholder('No ticket type selected')
           .addOptions(
@@ -60,6 +60,7 @@ module.exports = {
               value: "reporting a bug"
             },
           )
+          .setRequired
       
         const row = new ActionRowBuilder().addComponents(txt);
         const row2 = new ActionRowBuilder().addComponents(desc);
