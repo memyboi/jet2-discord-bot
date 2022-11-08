@@ -17,7 +17,7 @@ module.exports = {
         )
     ,
 	async execute(interaction, client) {
-    const xpSchema = require('../schema.js')
+    const xpSchema = require('../gainxp.js')
     async function availableTB(cost) { //available to buy
       const findRes = await xpSchema.find({ userId: message.author.id, guildId: message.guild.id })
       try {

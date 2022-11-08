@@ -18,7 +18,7 @@ const minCoinReward = 5 //Minimum coins you get for leveling up
 const maxCoinReward = 10 //Maximum coins you get for leveling up
 const lvlRewardMultiplier = 1.2 //How much the reward multiplies by when leveling up
 
-const xpSchema = require('./commands/gainxp.js')
+const xpSchema = require('./gainxp.js')
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
