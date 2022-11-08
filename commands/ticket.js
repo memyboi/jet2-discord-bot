@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
-const { Modal, TextInputComponent, SelectMenuComponent, showModal } = require('discord-modals'); // Import all
 const talkedRecently = new Set();
 const commandDelay = 2 //hour 
 
@@ -19,7 +18,7 @@ module.exports = {
       if (talkedRecently.has(interaction.user.id)) {
         interaction.reply({content:"Please wait " + commandDelay + " hours until you can use this command again", ephemeral: true});
       } else {
-        const modal = new Modal()
+        const modal = new ModalBuilder()
           .setCustomId('iquiryset')
           .setTitle('Create a ticket...');
 
