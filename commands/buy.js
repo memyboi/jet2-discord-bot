@@ -35,8 +35,9 @@ module.exports = {
     let guildId = interaction.guild.id
     let userId = interaction.user.id
     
-    if (lowerargs[1] == "exotic") {
-      console.log(lowerargs[1])
+    let item = interaction.options.getString("item")
+
+    if (item == "exotic") {
       let status = await availableTB(25)
       if (status == 0) {
         //buy
