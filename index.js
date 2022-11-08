@@ -58,8 +58,13 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  commands.push(command.data.toJSON());
+  try {
+    const command = require(`./commands/${file}`);
+    commands.push(command.data.toJSON());
+  } catch {
+    console.log("There was an error instantiating a command.")
+  }
+  
 }
 
 console.log(REST)
