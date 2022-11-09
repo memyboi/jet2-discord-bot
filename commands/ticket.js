@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
 const talkedRecently = new Set();
 const commandDelay = 2 //hour 
+const { SelectMenuComponent } = require("discord-modals")
 
 module.exports = {
 	data: new SlashCommandBuilder()
