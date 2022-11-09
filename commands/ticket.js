@@ -37,7 +37,7 @@ module.exports = {
           .setMaxLength(500)
           .setRequired(true);
 
-        const type = new SelectMenuBuilder()
+        const type = new SelectMenuComponent()
           .setCustomId("iquirytype")
           .setPlaceholder("Set ticket type")
           .setRequired(true)
