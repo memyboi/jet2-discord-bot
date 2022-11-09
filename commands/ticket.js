@@ -24,7 +24,6 @@ module.exports = {
           .setTitle('Create a ticket...');
 
         const txt = new TextInputBuilder()
-          .setType(3)
           .setCustomId('inquirytitle')
           .setLabel("Title")
           .setStyle(TextInputStyle.Short)
@@ -32,15 +31,13 @@ module.exports = {
           .setRequired(true);
 
         const desc = new TextInputBuilder()
-         .setType(3)
           .setCustomId('inquirydesc')
           .setLabel("Description")
           .setStyle(TextInputStyle.Paragraph)
-          .setMaxLength(500)
+          .setMaxLength(1000)
           .setRequired(true);
 
         const type = new SelectMenuComponent()
-          .setType(3)
           .setCustomId("iquirytype")
           .setPlaceholder("Set ticket type")
           .addOptions(
