@@ -521,7 +521,6 @@ client.on("interactionCreate", async interaction => {
   if (interaction.isModalSubmit()) {
     if (interaction.customId == "iquiryset") {
       const catergory = '1039252815643693106'
-      const title = interaction.fields.getTextInputValue('inquirytitle')
       const desc = interaction.fields.getTextInputValue('inquitydesc')
       const type = "undefined"
       interaction.guild.channels.create({
@@ -538,8 +537,6 @@ client.on("interactionCreate", async interaction => {
           const embed = new EmbedBuilder()
             .setTitle(`${title}`)
             .setDescription(`**This is a ticket by ${interaction.user.username}**
-            This ticket is ${type}
-
             ${desc}`)
             .setColor("0x000000")
 

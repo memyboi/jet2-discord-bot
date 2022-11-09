@@ -35,37 +35,11 @@ module.exports = {
           .setStyle(TextInputStyle.Paragraph)
           .setMaxLength(500)
           .setRequired(true);
-
-        const type = new SelectMenuBuilder()
-          .setCustomId('inquirytype')
-          .setPlaceholder('No ticket type selected')
-          .addOptions(
-            {
-              label: "Support",
-              description: "This will mark your ticket as support",
-              emoji: "🆘",
-              value: "asking for help on a specific topic"
-            },
-            {
-              label: "Suggestion",
-              description: "This will mark your ticket as a suggestion",
-              emoji: "💡",
-              value: "suggesting something"
-            },
-            {
-              label: "Bug",
-              description: "This will mark your ticket as a bug report",
-              emoji: "🐛",
-              value: "reporting a bug"
-            },
-          )
-          .setRequired(true);
       
         const row = new ActionRowBuilder().addComponents(txt);
         const row2 = new ActionRowBuilder().addComponents(desc);
-        const row3 = new ActionRowBuilder().addComponents(type);
       
-        modal.addComponents(row, row2, row3);
+        modal.addComponents(row, row2);
       
         await interaction.showModal()
         talkedRecently.add(interaction.user.id);
