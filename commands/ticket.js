@@ -40,7 +40,6 @@ module.exports = {
         const type = new SelectMenuComponent()
           .setCustomId("iquirytype")
           .setPlaceholder("Set ticket type")
-          .setRequired(true)
           .addOptions(
             {
               label: "Support",

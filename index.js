@@ -523,7 +523,7 @@ client.on("interactionCreate", async interaction => {
       const catergory = '1039252815643693106'
       const title = interaction.fields.getTextInputValue('inquirytitle')
       const desc = interaction.fields.getTextInputValue('inquirydesc')
-      const type = interaction.fields.getTextInputValue('inquirytype')
+      const type = interaction.fields.getSelectMenuValue('inquirytype')
       interaction.guild.channels.create({
         type: ChannelType.GuildText,
         name: title,
