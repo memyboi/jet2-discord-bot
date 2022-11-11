@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, PermissionsBitField } = require('discord.js')
 const talkedRecently = new Set();
 const commandDelay = 2 //hour 
 const { SelectMenuComponent } = require("discord-modals")
