@@ -10,8 +10,7 @@ const devBuild = false
 const buildNum = 37
 
 //SETTINGS
-const SendAnnInEmbed = true //Send Announcements in Embeds or not
-const SendTestAnnouncements = false //Send Announcements as a 'test announcement', which pings @here and states it is a test.
+const SendTestAnnouncements = true //Send Announcements as a 'test announcement', which pings @here and states it is a test.
 const minXpForLvlUp = 100 //Minimum XP required to level up.
 const lvlMultiplier = 1.3 //How much the minimum XP cap multiplies by on level up
 const minCoinReward = 5 //Minimum coins you get for leveling up
@@ -496,7 +495,6 @@ client.on("interactionCreate", async interaction => {
                 )
                 .setTimestamp()
               if (additionalinfo != null) {
-                console.log("wai")
                 if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
                 if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
               } else {
@@ -545,6 +543,64 @@ client.on("interactionCreate", async interaction => {
           savepersonalchatid(channel.id, interaction.user.id)
         }) .catch((err) => {
           console.log(err)
+        })
+      })
+    } else if (interaction.customId == "announceflight") {
+      client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+        guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
+          const destofflight = interaction.fields.getSelectMenuValue("ad")
+          const timeofflight = interaction.fields.getSelectMenuValue("at")
+          const additionalinfo = interaction.fields.getTextInputValue("ai")
+          const testAnnouncementEmbed = new EmbedBuilder()
+            .setColor('#ff0000')
+            .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+            .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+            .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
+            .addFields(
+              { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+              { name: "Where is it going to?", value: destofflight, inline: false },
+            )
+            .setTimestamp()
+          const testAnnouncementEmbedWAI = new EmbedBuilder()
+            .setColor('#ff0000')
+            .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+            .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+            .setDescription('THIS IS NOT A FLIGHT, IT IS A BOT TEST.')
+            .addFields(
+              { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+              { name: "Where is it going to?", value: destofflight, inline: false },
+              { name: "Aditional info:", value: "" + additionalinfo, inline: false },
+            )
+            .setTimestamp()
+          const announcementEmbed = new EmbedBuilder()
+            .setColor('#ff0000')
+            .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
+            .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+            .setDescription('This is an announcement for a flight!')
+            .addFields(
+              { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+              { name: "Where is it going to?", value: destofflight, inline: false },
+            )
+            .setTimestamp()
+          const announcementEmbedWAI = new EmbedBuilder()
+            .setColor('#ff0000')
+            .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
+            .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+            .setDescription('This is an announcement for a flight!')
+            .addFields(
+              { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+              { name: "Where is it going to?", value: destofflight, inline: false },
+              { name: "Aditional info:", value: "" + additionalinfo, inline: false },
+            )
+            .setTimestamp()
+          if (additionalinfo != null) {
+            console.log("wai")
+            if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbedWAI]});
+            if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
+          } else {
+            if (SendTestAnnouncements) channel.send({ content: "||there is no ping, this is a test||", embeds: [testAnnouncementEmbed]});
+            if (!SendTestAnnouncements) channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
+          }
         })
       })
     }
