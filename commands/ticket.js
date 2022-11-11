@@ -61,7 +61,7 @@ module.exports = {
         interaction.guild.members.fetch() .then(async members => {
 					members.forEach(async member => {
             permissionsofuser = interaction.channel.permissionsFor(member.user)
-            if (member.roles.some(role => role.id === '1021385937437065287') || permissionsofuser && permissionsofuser.has(PermissionsBitField.Flags.ViewChannel, true)) {
+            if (member.roles.cache.some(role => role.id === '1021385937437065287') || permissionsofuser && permissionsofuser.has(PermissionsBitField.Flags.ViewChannel, true)) {
               member.user.send("A ticket that you are a part of has been closed.")
             }
           })
