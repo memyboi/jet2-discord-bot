@@ -1,4 +1,4 @@
-const { EmbedBuilder, PermissionsBitField } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField, SlashCommandBuilder } = require('discord.js')
 const talkedRecently = new Set();
 const commandDelay = 1 //seconds 
 
@@ -70,10 +70,6 @@ const changebyoperator = async (opr, num) => {
     return num * -1
   }
 }
-
-const { EmbedBuilder } = require('discord.js')
-
-const { SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
