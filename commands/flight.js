@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, PermissionsBitField, TextInputStyle, TextInputComponent, ModalBuilder } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, PermissionsBitField, TextInputStyle, TextInputComponent, ModalBuilder, TextInputBuilder } = require('discord.js')
 const talkedRecently = new Set();
 const commandDelay = 1 //seconds 
 
