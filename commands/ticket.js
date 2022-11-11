@@ -13,6 +13,12 @@ module.exports = {
 				.setDescription('Open a ticket.')
 						
 			)
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('close')
+        .setDescription('Close the ticket channel that you are currently in.')
+            
+      )
     ,
 	async execute(interaction, client) {
     if (interaction.options.getSubcommand() == "open") {
@@ -49,6 +55,20 @@ module.exports = {
           talkedRecently.delete(interaction.user.id);
         }, commandDelay * 3600000);
       }
+    } else if(interaction.options.getSubcommand() == "close") {
+      if (interaction.channel.parentId == "1039252815643693106") {
+        interaction.channel.delete()
+        interaction.guild.members.fetch() .then(async members => {
+					members.forEach(async member => {
+            permissionsofuser = interaction.channel.permissionsFor(member.user)
+            if (member.roles.some(role => role.id === '1021385937437065287') || permissionsofuser && permissionsofuser.has(PermissionsBitField.Flags.ViewChannel, true)) {
+              member.user.send("A ticket that you are a part of has been closed.")
+            }
+          })
+        })
+      } else {
+        interaction.reply({content: "This is not a ticket channel >:(", ephemeral: true})
+      }
     }
-	},
+	} 
 };
