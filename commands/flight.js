@@ -9,7 +9,7 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("announce")
-                .setDescription("Announce a flight.")
+                .setDescription("Announce a flight with details.")
         )
         .addSubcommand(subcommand =>
             subcommand
@@ -24,7 +24,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionsBitField.Flags.MentionEveryone && PermissionsBitField.Flags.ManageEvents)
     ,
     async execute(interaction, client) {
-        if (interaction.options.getSubCommand() == "announce") {
+        if (interaction.options.getSubcommand() == "announce") {
             const modal = new ModalBuilder()
                 .setCustomId('announceflight')
                 .setTitle('Create a flight announcement...');
@@ -166,7 +166,7 @@ module.exports = {
             modal.addComponents(row, row2, row3)
 
             await interaction.showModal(modal);
-        } else if (interaction.options.getSubCommand() == "ask") {
+        } else if (interaction.options.getSubcommand() == "ask") {
             guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
                 const additionalinfo = interaction.option.getString("additonal-info")
                 const announcementEmbed = new EmbedBuilder()
