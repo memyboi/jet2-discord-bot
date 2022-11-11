@@ -9,7 +9,7 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName("announce")
-                .setDescription("Announce a flight. You will be able to add the time of occurance, destination and any additional info.")
+                .setDescription("Announce a flight.")
         )
         .addSubcommand(subcommand =>
             subcommand
