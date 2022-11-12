@@ -115,28 +115,29 @@ module.exports = {
     const operator = interaction.options.getString("operator")
     const stat = interaction.options.getString("stat")
     const user = interaction.options.getUser("target")
-    const realamnt = changebyoperator(operator, amnt)
-    if (stat == "points") {
-      addCoins(interaction.guild.id, user.id, realamnt)
-      if (operator == "+") {
-        interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" points.", ephemeral: true})
-      } else {
-        interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their points.", ephemeral: true})
+    changebyoperator(operator, amnt) .then(realamnt => {
+      if (stat == "points") {
+        addCoins(interaction.guild.id, user.id, realamnt)
+        if (operator == "+") {
+          interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" points.", ephemeral: true})
+        } else {
+          interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their points.", ephemeral: true})
+        }
+      } else if (stat == "xp") {
+        addXP(interaction.guild.id, user.id, realamnt)
+        if (operator == "+") {
+          interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" XP.", ephemeral: true})
+        } else {
+          interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their XP.", ephemeral: true})
+        }
+      } else if (stat == "lvls") {
+        addLevelCmd(interaction.guild.id, user.id, realamnt)
+        if (operator == "+") {
+          interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" Levels.", ephemeral: true})
+        } else {
+          interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their Levels.", ephemeral: true})
+        }
       }
-    } else if (stat == "xp") {
-      addXP(interaction.guild.id, user.id, realamnt)
-      if (operator == "+") {
-        interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" XP.", ephemeral: true})
-      } else {
-        interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their XP.", ephemeral: true})
-      }
-    } else if (stat == "lvls") {
-      addLevelCmd(interaction.guild.id, user.id, realamnt)
-      if (operator == "+") {
-        interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" Levels.", ephemeral: true})
-      } else {
-        interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their Levels.", ephemeral: true})
-      }
-    }
+    })
 	} 
 };
