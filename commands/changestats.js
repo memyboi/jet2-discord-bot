@@ -122,21 +122,21 @@ module.exports = {
         if (operator == "+") {
           interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" points.", ephemeral: true})
         } else {
-          interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their points.", ephemeral: true})
+          interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their points.", ephemeral: true})
         }
       } else if (stat == "xp") {
         addXP(interaction.guild.id, user.id, realamnt)
         if (operator == "+") {
           interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" XP.", ephemeral: true})
         } else {
-          interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their XP.", ephemeral: true})
+          interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their XP.", ephemeral: true})
         }
       } else if (stat == "lvls") {
         addLevelCmd(interaction.guild.id, user.id, realamnt)
         if (operator == "+") {
           interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" Levels.", ephemeral: true})
         } else {
-          interaction.reply({content: "The user "+user.username+" has "+realamnt*-1+" been removed from their Levels.", ephemeral: true})
+          interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their Levels.", ephemeral: true})
         }
       }
     })
