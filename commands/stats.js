@@ -11,7 +11,7 @@ module.exports = {
 			)
     ,
 	async execute(interaction, client) {
-    const xpSchema = require('./gainxp.js')
+    const xpSchema = require('../gainxp.js')
     const member = interaction.options.getUser("target")
 
     const findRes = await xpSchema.find({ userId: member.id, guildId: message.guild.id })
