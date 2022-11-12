@@ -111,7 +111,7 @@ module.exports = {
                 const announcementEmbed = new EmbedBuilder()
                     .setColor('#ff0000')
                     .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
-                    .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}` })
+                    .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}` })
                     .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
                     .setTimestamp()
 
