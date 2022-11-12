@@ -17,6 +17,7 @@ const addCoins = async (guildId, userId, coinsToAdd, xpSchema) => {
       upsert: true,
       new: true
     })
+    return "went good :)"
   } catch(e) {
     console.log(e)
   }
@@ -37,6 +38,7 @@ const addLevelCmd = async (guildId, userId, levels, xpSchema) => {
       upsert: true,
       new: true
     })
+    return "went good :)"
   } catch(e) {
     console.log(e)
   }
@@ -57,6 +59,7 @@ const addXP = async (guildId, userId, xpToAdd, xpSchema) => {
       upsert: true,
       new: true
     })
+    return "went good :)"
   } catch(e) {
     console.log(e)
   }
@@ -118,26 +121,35 @@ module.exports = {
     const user = interaction.options.getUser("target")
     changebyoperator(operator, amnt) .then(realamnt => {
       if (stat == "points") {
-        addCoins(interaction.guild.id, user.id, realamnt)
-        if (operator == "+") {
-          interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" points.", ephemeral: true})
-        } else {
-          interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their points.", ephemeral: true})
-        }
+        addCoins(interaction.guild.id, user.id, realamnt, xpSchema) .then(how => {
+          if (operator == "+") {
+            interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" points.", ephemeral: true})
+          } else {
+            interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their points.", ephemeral: true})
+          }
+        }) .catch((e) => {
+          interaction.reply({content: "There was an error while changing this user's stats. Try again later.", ephemeral: true})
+        })
       } else if (stat == "xp") {
-        addXP(interaction.guild.id, user.id, realamnt)
-        if (operator == "+") {
-          interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" XP.", ephemeral: true})
-        } else {
-          interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their XP.", ephemeral: true})
-        }
+        addXP(interaction.guild.id, user.id, realamnt, xpSchema) .then(how => {
+          if (operator == "+") {
+            interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" Experience.", ephemeral: true})
+          } else {
+            interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their Experience.", ephemeral: true})
+          }
+        }) .catch((e) => {
+          interaction.reply({content: "There was an error while changing this user's stats. Try again later.", ephemeral: true})
+        })
       } else if (stat == "lvls") {
-        addLevelCmd(interaction.guild.id, user.id, realamnt)
-        if (operator == "+") {
-          interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" Levels.", ephemeral: true})
-        } else {
-          interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their Levels.", ephemeral: true})
-        }
+        addLevelCmd(interaction.guild.id, user.id, realamnt, xpSchema) .then(how => {
+          if (operator == "+") {
+            interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" levels.", ephemeral: true})
+          } else {
+            interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their levels.", ephemeral: true})
+          }
+        }) .catch((e) => {
+          interaction.reply({content: "There was an error while changing this user's stats. Try again later.", ephemeral: true})
+        })
       }
     })
 	} 

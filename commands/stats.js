@@ -12,7 +12,7 @@ module.exports = {
     ,
 	async execute(interaction, client) {
     const xpSchema = require('../gainxp.js')
-    const member = interaction.options.getUser("target")
+    let member = interaction.options.getUser("target")
 
     if (!member) member = interaction.user
 
@@ -21,7 +21,7 @@ module.exports = {
       let lvl = findRes[0].level
       let xp = findRes[0].xp
       let coins = findRes[0].coins
-      let nextLvlUpThingy = Math.floor(((lvl * lvlMultiplier) * minXpForLvlUp))
+      let nextLvlUpThingy = Math.floor(((lvl * 1.3) * 100))
       
       const exampleEmbed = new EmbedBuilder()
       .setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL()})
