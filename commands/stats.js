@@ -24,8 +24,8 @@ module.exports = {
       let nextLvlUpThingy = Math.floor(((lvl * 1.3) * 100))
       
       const exampleEmbed = new EmbedBuilder()
-      .setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL()})
-      .setDescription(`${process.env.emojilogo}${member}'s stats: ${process.env.emojilogo}`)
+      .setAuthor({ name: member.username, iconURL: member.displayAvatarURL()})
+      .setDescription(`${process.env.emojilogo}${member.username}'s stats: ${process.env.emojilogo}`)
       .addFields(
         { name: "**Level** ", value: "" + lvl, inline: true },
         { name: "**XP** ", value: "" + xp, inline: true },
