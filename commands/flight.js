@@ -73,7 +73,7 @@ module.exports = {
     ,
     async execute(interaction, client) {
         if (interaction.options.getSubcommand() == "announce") {
-            const ai = interaction.options.getString("additonal-info")
+            const ai = interaction.options.getString("additional-info")
             const t = interaction.options.getString("timeframe")
             const d = interaction.options.getString("destination")
 
@@ -108,7 +108,7 @@ module.exports = {
             interaction.deferReply()
         } else if (interaction.options.getSubcommand() == "ask") {
             interaction.guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
-                const additionalinfo = interaction.options.getString("additonal-info")
+                const additionalinfo = interaction.options.getString("additional-info")
                 const announcementEmbed = new EmbedBuilder()
                     .setColor('#ff0000')
                     .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
