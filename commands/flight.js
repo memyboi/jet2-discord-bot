@@ -99,12 +99,13 @@ module.exports = {
                     { name: "Aditional info:", value: "" + ai, inline: false },
                     )
                     .setTimestamp()
-                if (ai != null) {
+                if (ai != null || ai != "") {
                     channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedWAI]});
                 } else {
                     channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed]});
                 }
             })
+            interaction.deferReply()
         } else if (interaction.options.getSubcommand() == "ask") {
             interaction.guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
                 const additionalinfo = interaction.options.getString("additonal-info")
@@ -115,9 +116,16 @@ module.exports = {
                     .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
                     .setTimestamp()
 
-                if (additionalinfo != null) {
-                    announcementEmbed.addFields({name: "Additional info", value: additionalinfo, inline: true})
-                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed] }).then((msg) => {
+                const announcementEmbedAI = new EmbedBuilder()
+                    .setColor('#ff0000')
+                    .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
+                    .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}` })
+                    .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
+                    .setTimestamp()
+                    .addFields({name: "Additional info", value: additionalinfo, inline: true})
+
+                if (additionalinfo != null || additionalinfo != "") {
+                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedAI] }).then((msg) => {
                         msg.react('✅')
                         msg.react('❎')
                     })
@@ -128,6 +136,7 @@ module.exports = {
                     })
                 }
             })
+            interaction.deferReply()
         }
     }
 };
