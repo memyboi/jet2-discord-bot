@@ -14,7 +14,7 @@ module.exports = {
     const xpSchema = require('../gainxp.js')
     const member = interaction.options.getUser("target")
 
-    const findRes = await xpSchema.find({ userId: member.id, guildId: message.guild.id })
+    const findRes = await xpSchema.find({ userId: member.id, guildId: interaction.guild.id })
     try {
       let lvl = findRes[0].level
       let xp = findRes[0].xp
@@ -32,9 +32,9 @@ module.exports = {
       )
       .setColor("#ff0000")
   
-    message.reply({ embeds: [exampleEmbed]});
+      interaction.reply({ embeds: [exampleEmbed], ephemeral: true});
     } catch(e) {
-      return message.reply("This member's stats cannot be found!")
+      return interaction.reply({content:"This member's stats cannot be found!", ephemeral: true})
     }
 	} 
 };
