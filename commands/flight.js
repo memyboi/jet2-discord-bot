@@ -73,43 +73,41 @@ module.exports = {
     ,
     async execute(interaction, client) {
         if (interaction.options.getSubcommand() == "announce") {
-            const ai = interaction.option.getString("additonal-info")
-            const t = interaction.option.getString("timeframe")
-            const d = interaction.option.getString("destination")
+            const ai = interaction.options.getString("additonal-info")
+            const t = interaction.options.getString("timeframe")
+            const d = interaction.options.getString("destination")
 
-            client.guilds.fetch("" + process.env.guildid) .then((guild) => {
-                guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
-                    const announcementEmbed = new EmbedBuilder()
-                      .setColor('#ff0000')
-                      .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
-                      .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-                      .setDescription('This is an announcement for a flight!')
-                      .addFields(
-                        { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
-                        { name: "Where is it going to?", value: destofflight, inline: false },
-                      )
-                      .setTimestamp()
-                    const announcementEmbedWAI = new EmbedBuilder()
-                      .setColor('#ff0000')
-                      .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
-                      .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-                      .setDescription('This is an announcement for a flight!')
-                      .addFields(
-                        { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
-                        { name: "Where is it going to?", value: destofflight, inline: false },
-                        { name: "Aditional info:", value: "" + additionalinfo, inline: false },
-                      )
-                      .setTimestamp()
-                    if (additionalinfo != null) {
-                      channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedWAI]});
-                    } else {
-                        channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed]});
-                    }
-                })
-              })
+            interaction.guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
+                const announcementEmbed = new EmbedBuilder()
+                    .setColor('#ff0000')
+                    .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                    .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                    .setDescription('This is an announcement for a flight!')
+                    .addFields(
+                    { name: "When is it happening?", value: "Happening " + t + "!", inline: false },
+                    { name: "Where is it going to?", value: d, inline: false },
+                    )
+                    .setTimestamp()
+                const announcementEmbedWAI = new EmbedBuilder()
+                    .setColor('#ff0000')
+                    .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                    .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                    .setDescription('This is an announcement for a flight!')
+                    .addFields(
+                    { name: "When is it happening?", value: "Happening " + t + "!", inline: false },
+                    { name: "Where is it going to?", value: d, inline: false },
+                    { name: "Aditional info:", value: "" + ai, inline: false },
+                    )
+                    .setTimestamp()
+                if (ai != null) {
+                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedWAI]});
+                } else {
+                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed]});
+                }
+            })
         } else if (interaction.options.getSubcommand() == "ask") {
-            guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
-                const additionalinfo = interaction.option.getString("additonal-info")
+            interaction.guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
+                const additionalinfo = interaction.options.getString("additonal-info")
                 const announcementEmbed = new EmbedBuilder()
                     .setColor('#ff0000')
                     .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
