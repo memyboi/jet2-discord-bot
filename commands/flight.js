@@ -50,6 +50,7 @@ module.exports = {
                         .setRequired(true)
                         .addChoices(
                             { name: 'robloxia-town', value: 'Robloxia Town' },
+                            { name: 'cloud-city', value: 'Cloud City' },
                             { name: 'unknown', value: 'N/A' },
                         )
                 )
