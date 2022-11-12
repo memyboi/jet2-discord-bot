@@ -111,6 +111,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
     ,
 	async execute(interaction, client) {
+    const xpSchema = require('./gainxp.js')
     const amnt = interaction.options.getInteger("amount")
     const operator = interaction.options.getString("operator")
     const stat = interaction.options.getString("stat")
