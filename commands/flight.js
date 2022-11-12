@@ -81,7 +81,7 @@ module.exports = {
             interaction.guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
                 const announcementEmbed = new EmbedBuilder()
                     .setColor('#ff0000')
-                    .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                    .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
                     .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
                     .setDescription('This is an announcement for a flight!')
                     .addFields(
@@ -91,7 +91,7 @@ module.exports = {
                     .setTimestamp()
                 const announcementEmbedWAI = new EmbedBuilder()
                     .setColor('#ff0000')
-                    .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                    .setTitle(process.env.emojilogo + " Flight Announcement! " + process.env.emojilogo)
                     .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
                     .setDescription('This is an announcement for a flight!')
                     .addFields(
@@ -101,9 +101,9 @@ module.exports = {
                     )
                     .setTimestamp()
                 if (ai != null || ai != "") {
-                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedWAI]});
+                    channel.send({ content: "||@everyone||", embeds: [announcementEmbedWAI]});
                 } else {
-                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed]});
+                    channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
                 }
             })
             interaction.deferReply()
@@ -112,7 +112,7 @@ module.exports = {
                 const additionalinfo = interaction.options.getString("additional-info")
                 const announcementEmbed = new EmbedBuilder()
                     .setColor('#ff0000')
-                    .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
+                    .setTitle(process.env.emojilogo + " Should we do a flight? " + process.env.emojilogo)
                     .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}` })
                     .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
                     .setTimestamp()
@@ -120,17 +120,17 @@ module.exports = {
                 if (additionalinfo != null || additionalinfo != "") {
                     const announcementEmbedAI = new EmbedBuilder()
                         .setColor('#ff0000')
-                        .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
+                        .setTitle(process.env.emojilogo + " Should we do a flight? " + process.env.emojilogo)
                         .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}` })
                         .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
                         .setTimestamp()
                         .addFields({name: "Additional info", value: ""+additionalinfo, inline: true})
-                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedAI] }).then((msg) => {
+                    channel.send({ content: "||@everyone||", embeds: [announcementEmbedAI] }).then((msg) => {
                         msg.react('✅')
                         msg.react('❎')
                     })
                 } else {
-                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed] }).then((msg) => {
+                    channel.send({ content: "||@everyone||", embeds: [announcementEmbed] }).then((msg) => {
                         msg.react('✅')
                         msg.react('❎')
                     })
