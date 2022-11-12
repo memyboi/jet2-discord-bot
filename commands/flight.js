@@ -10,6 +10,54 @@ module.exports = {
             subcommand
                 .setName("announce")
                 .setDescription("Announce a flight with details.")
+                .addStringOption(option =>
+                    option
+                        .setName("timeframe")
+                        .setDescription("The time at which the flight should take place.")
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'now', value: 'now! Join up! (link in <#1007959104611946547>)' },
+                            { name: '5m', value: 'in 5 minutes' },
+                            { name: '10m', value: 'in 10 minutes' },
+                            { name: '15m', value: 'in 15 minutes' },
+                            { name: '20m', value: 'in 20 minutes' },
+                            { name: '25m', value: 'in 25 minutes' },
+                            { name: '30m', value: 'in 30 minutes' },
+                            { name: '35m', value: 'in 35 minutes' },
+                            { name: '40m', value: 'in 40 minutes' },
+                            { name: '45m', value: 'in 45 minutes' },
+                            { name: '50m', value: 'in 50 minutes' },
+                            { name: '55m', value: 'in 55 minutes' },
+                            { name: '1h', value: 'in 1 hour' },
+                            { name: '1h15m', value: 'in 1 hour and 15 minutes' },
+                            { name: '1h30m', value: 'in 1 hour and 30 minutes' },
+                            { name: '1h45m', value: 'in 1 hour and 45 minutes' },
+                            { name: '2h', value: 'in 2 hours' },
+                            { name: '2h15m', value: 'in 2 hours and 15 minutes' },
+                            { name: '2h30m', value: 'in 2 hours and 30 minutes' },
+                            { name: '2h45m', value: 'in 2 hours and 45 minutes' },
+                            { name: '3h', value: 'in 3 hours' },
+                            { name: '4h', value: 'in 4 hours' },
+                            { name: '5h', value: 'in 5 hours' },
+                            { name: '6h', value: 'in 6 hours' },
+                            { name: 'tomorrow', value: 'tommorow! (in 24 hours)' },
+                        )
+                )
+                .addStringOption(option =>
+                    option
+                        .setName("destination")
+                        .setDescription("The destination that the flight will fly to.")
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'robloxia-town', value: 'Robloxia Town' },
+                            { name: 'unknown', value: 'N/A' },
+                        )
+                )
+                .addStringOption(option => 
+                    option
+                        .setName("additional-info")
+                        .setDescription("Any additional info you would like to add on.")
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
@@ -25,165 +73,58 @@ module.exports = {
     ,
     async execute(interaction, client) {
         if (interaction.options.getSubcommand() == "announce") {
-            const modal = new ModalBuilder()
-                .setCustomId('announceflight')
-                .setTitle('Create a flight announcement...');
-            const row = new ActionRowBuilder()
-                .addComponents(
-                    new SelectMenuBuilder()
-                        .setCustomId('at')
-                        .setPlaceholder('No timeframe selected')
-                        .addOptions(
-                            {
-                                label: 'Now',
-                                value: '00now! Join up! (link in <#1007959104611946547>)',
-                            },
-                            {
-                                label: '5 minutes',
-                                value: '01in 5 minutes',
-                            },
-                            {
-                                label: '10 minutes',
-                                value: '02in 10 minutes',
-                            },
-                            {
-                                label: '15 minutes',
-                                value: '03in 15 minutes',
-                            },
-                            {
-                                label: '20 minutes',
-                                value: '04in 20 minutes',
-                            },
-                            {
-                                label: '25 minutes',
-                                value: '05in 25 minutes',
-                            },
-                            {
-                                label: '30 minutes',
-                                value: '06in 30 minutes',
-                            },
-                            {
-                                label: '35 minutes',
-                                value: '07in 35 minutes',
-                            },
-                            {
-                                label: '40 minutes',
-                                value: '08in 40 minutes',
-                            },
-                            {
-                                label: '45 minutes',
-                                value: '09in 45 minutes',
-                            },
-                            {
-                                label: '50 minutes',
-                                value: '10in 50 minutes',
-                            },
-                            {
-                                label: '55 minutes',
-                                value: '11in 55 minutes',
-                            },
-                            {
-                                label: '1 hour',
-                                value: '12in 1 hour',
-                            },
-                            {
-                                label: '1 hour and 15 minutes',
-                                value: '13in 1 hour and 15 minutes',
-                            },
-                            {
-                                label: '1 hour and 30 minutes',
-                                value: '14in 1 hour and 30 minutes',
-                            },
-                            {
-                                label: '1 hour and 45 minutes',
-                                value: '15in 1 hour and 45 minutes',
-                            },
-                            {
-                                label: '2 hours',
-                                value: '16in 2 hours',
-                            },
-                            {
-                                label: '2 hours and 15 minutes',
-                                value: '17in 2 hours and 15 minutes',
-                            },
-                            {
-                                label: '2 hours and 30 minutes',
-                                value: '18in 2 hours and 30 minutes',
-                            },
-                            {
-                                label: '2 hours and 45 minutes',
-                                value: '19in 2 hours and 45 minutes',
-                            },
-                            {
-                                label: '3 hours',
-                                value: '20in 3 hours',
-                            },
-                            {
-                                label: '4 hours',
-                                value: '21in 4 hours',
-                            },
-                            {
-                                label: '5 hours',
-                                value: '22in 5 hours',
-                            },
-                            {
-                                label: '6 hours',
-                                value: '23in 6 hours',
-                            },
-                            {
-                                label: 'Tomorrow (24 hours)',
-                                value: '24tommorow (24 hours)',
-                            },
-                        ),
-                );
-            const row2 = new ActionRowBuilder()
-                .addComponents(
-                    new SelectMenuBuilder()
-                        .setCustomId('ad')
-                        .setPlaceholder('No destination selected')
-                        .addOptions(
-                            {
-                                label: 'N/A',
-                                value: '00N/A',
-                            },
-                            {
-                                label: 'Robloxia Town',
-                                value: '01Robloxia Town',
-                            },
-                        ),
-                );
+            const ai = interaction.option.getString("additonal-info")
+            const t = interaction.option.getString("timeframe")
+            const d = interaction.option.getString("destination")
 
-            const row3 = new ActionRowBuilder()
-                .addComponents(
-                    new TextInputBuilder()
-                        .setCustomId('ai')
-                        .setLabel("Additional info")
-                        .setStyle(TextInputStyle.Paragraph)
-                        .setMaxLength(1000)
-                        .setRequired(false),
-                )
-
-            modal.addComponents(row, row2, row3)
-
-            await interaction.showModal(modal);
+            client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+                guild.channels.fetch("" + process.env.announcementchannelid) .then((channel) => {
+                    const announcementEmbed = new EmbedBuilder()
+                      .setColor('#ff0000')
+                      .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                      .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                      .setDescription('This is an announcement for a flight!')
+                      .addFields(
+                        { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+                        { name: "Where is it going to?", value: destofflight, inline: false },
+                      )
+                      .setTimestamp()
+                    const announcementEmbedWAI = new EmbedBuilder()
+                      .setColor('#ff0000')
+                      .setTitle(process.env.emojilogo + " TEST Flight Announcement! " + process.env.emojilogo)
+                      .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+                      .setDescription('This is an announcement for a flight!')
+                      .addFields(
+                        { name: "When is it happening?", value: "Happening " + timeofflight + "!", inline: false },
+                        { name: "Where is it going to?", value: destofflight, inline: false },
+                        { name: "Aditional info:", value: "" + additionalinfo, inline: false },
+                      )
+                      .setTimestamp()
+                    if (additionalinfo != null) {
+                      channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedWAI]});
+                    } else {
+                        channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed]});
+                    }
+                })
+              })
         } else if (interaction.options.getSubcommand() == "ask") {
             guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
                 const additionalinfo = interaction.option.getString("additonal-info")
                 const announcementEmbed = new EmbedBuilder()
                     .setColor('#ff0000')
-                    .setTitle(process.env.emojilogo + " Should we do a flight? " + process.env.emojilogo)
+                    .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
                     .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}` })
                     .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
                     .setTimestamp()
 
                 if (additionalinfo != null) {
                     announcementEmbed.addFields({name: "Additional info", value: additionalinfo, inline: true})
-                    channel.send({ content: "||@everyone||", embeds: [announcementEmbed] }).then((msg) => {
+                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed] }).then((msg) => {
                         msg.react('✅')
                         msg.react('❎')
                     })
                 } else {
-                    channel.send({ content: "||@everyone||", embeds: [announcementEmbed] }).then((msg) => {
+                    channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbed] }).then((msg) => {
                         msg.react('✅')
                         msg.react('❎')
                     })

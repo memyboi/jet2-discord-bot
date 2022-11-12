@@ -10,7 +10,7 @@ module.exports = {
     ,
 	async execute(interaction, client) {
     const exampleEmbed = new EmbedBuilder()
-      .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL()})
+      .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL()})
       .setDescription(`Shop, 1 (Roles)`)
       .addFields(
         { name: "Exotic Role", value: "25 Jet2 Points\nOnly people with '[E] Exotic' can talk in 'Exotic Channel'.\n`/buy Exotic`", inline: true },
