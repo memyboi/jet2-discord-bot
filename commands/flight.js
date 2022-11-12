@@ -116,15 +116,14 @@ module.exports = {
                     .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
                     .setTimestamp()
 
-                const announcementEmbedAI = new EmbedBuilder()
-                    .setColor('#ff0000')
-                    .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
-                    .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}` })
-                    .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
-                    .setTimestamp()
-                    .addFields({name: "Additional info", value: additionalinfo, inline: true})
-
                 if (additionalinfo != null || additionalinfo != "") {
+                    const announcementEmbedAI = new EmbedBuilder()
+                        .setColor('#ff0000')
+                        .setTitle(process.env.emojilogo + " Should we do a TEST flight? " + process.env.emojilogo)
+                        .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}` })
+                        .setDescription('Please vote with a ✅ or a ❎ if we should fly!')
+                        .setTimestamp()
+                        .addFields({name: "Additional info", value: ""+additionalinfo, inline: true})
                     channel.send({ content: "||THIS IS A TEST||", embeds: [announcementEmbedAI] }).then((msg) => {
                         msg.react('✅')
                         msg.react('❎')
