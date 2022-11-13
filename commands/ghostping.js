@@ -17,6 +17,7 @@ module.exports = {
           option
             .setName("target")
             .setDescription("The specific user you would like to ghostping")
+            .setRequired(true)
         )
     )
     .setDefaultMemberPermissions(PermissionsBitField.Flags.MentionEveryone)
@@ -25,6 +26,7 @@ module.exports = {
     if (interaction.options.getSubcommand() == "everyone") {
       interaction.channel.send({content: "@everyone"}) .then(msg => {
         msg.delete()
+        interaction.deferReply({content: "Everyone was ghostpinged.", ephemeral: true})
       }) .catch(e => {
         console.log(e)
         interaction.deferReply({content: "There was an error while creating a ghostping.", ephemeral: true})
@@ -33,6 +35,7 @@ module.exports = {
       const target = interaction.options.getUser("target")
       interaction.channel.send({content: "<@"+target.id+">"}) .then(msg => {
         msg.delete()
+        interaction.deferReply({content: "The user "+target.username+" was ghostpinged.", ephemeral: true})
       }) .catch(e => {
         console.log(e)
         interaction.deferReply({content: "There was an error while creating a ghostping.", ephemeral: true})
