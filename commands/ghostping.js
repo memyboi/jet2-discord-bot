@@ -8,7 +8,6 @@ module.exports = {
       subcommand
         .setName("everyone")
         .setDescription("Ghostpings @everyone")
-        .setDefaultMemberPermissions(PermissionsBitField.Flags.MentionEveryone && PermissionsBitField.Flags.ManageEvents)
     )
     .addSubcommand(subcommand => 
       subcommand
@@ -20,7 +19,7 @@ module.exports = {
             .setDescription("The specific user you would like to ghostping")
         )
     )
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.MentionEveryone)
     ,
 	async execute(interaction, client) {
     if (interaction.options.getSubcommand() == "everyone") {
