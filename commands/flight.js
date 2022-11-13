@@ -106,7 +106,7 @@ module.exports = {
                     channel.send({ content: "||@everyone||", embeds: [announcementEmbed]});
                 }
             })
-            interaction.deferReply()
+            interaction.deferReply({content: "The announcement embed has been sent.", ephemeral: true})
         } else if (interaction.options.getSubcommand() == "ask") {
             interaction.guild.channels.fetch("" + process.env.announcementchannelid).then((channel) => {
                 const additionalinfo = interaction.options.getString("additional-info")
@@ -136,7 +136,7 @@ module.exports = {
                     })
                 }
             })
-            interaction.deferReply()
+            interaction.deferReply({content: "The ask embed has been sent.", ephemeral: true})
         }
     }
 };
