@@ -89,7 +89,7 @@ module.exports = {
         .setName("stat")
         .setDescription("The stat to change.")
         .addChoices(
-          { name: 'Jet2Points', value: 'points' },
+          { name: 'LexunPoints', value: 'points' },
           { name: 'Experience', value: 'xp' },
           { name: 'Levels', value: 'lvls' },
         )
@@ -123,9 +123,9 @@ module.exports = {
       if (stat == "points") {
         addCoins(interaction.guild.id, user.id, realamnt, xpSchema) .then(how => {
           if (operator == "+") {
-            interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" points.", ephemeral: true})
+            interaction.reply({content: "The user "+user.username+" has been granted "+realamnt+" Lexun points.", ephemeral: true})
           } else {
-            interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their points.", ephemeral: true})
+            interaction.reply({content: "The user "+user.username+" has lost "+realamnt*-1+" of their Lexun points.", ephemeral: true})
           }
         }) .catch((e) => {
           interaction.reply({content: "There was an error while changing this user's stats. Try again later.", ephemeral: true})

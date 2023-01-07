@@ -29,7 +29,7 @@ module.exports = {
       .addFields(
         { name: "**Level** ", value: "" + lvl, inline: true },
         { name: "**XP** ", value: "" + xp, inline: true },
-        { name: "**Jet2 Points** ", value: "" + coins, inline: true },
+        { name: "**Lexun Points** ", value: "" + coins, inline: true },
         { name: "**XP Needed until level up:** ", value: "" + nextLvlUpThingy, inline: false },
       )
       .setColor("#ff0000")
