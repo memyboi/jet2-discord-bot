@@ -156,6 +156,8 @@ const addXP = async (guildId, userId, xpToAdd) => {
   }
 }
 
+//
+
 async function doXp(message) {
   addXP(message.guild.id, message.author.id, getRandomArbitrary(1, 5))
   let cLevel = 1
