@@ -1,12 +1,13 @@
 const { EmbedBuilder } = require('discord.js')
 
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, PermissionsBitField } = require('discord.js')
 const { SelectMenuComponent } = require("discord-modals")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('shop')
 		.setDescription('Sends the shop contents.')
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.SendMessages)
     ,
 	async execute(interaction, client) {
     const exampleEmbed = new EmbedBuilder()

@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js')
+const { EmbedBuilder, SlashCommandBuilder, PermissionsBitField } = require('discord.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,6 +9,7 @@ module.exports = {
 				.setName('target')
 				.setDescription('The user that you would like to know the stats of.')
 			)
+      .setDefaultMemberPermissions(PermissionsBitField.Flags.SendMessages)
     ,
 	async execute(interaction, client) {
     const xpSchema = require('../gainxp.js')

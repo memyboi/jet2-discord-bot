@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js');
 const talkedRecently = new Set();
 const commandDelay = 1 //seconds 
 
@@ -15,6 +15,7 @@ module.exports = {
           { name: 'Exotic role', value: 'exotic' },
         )
         )
+        .setDefaultMemberPermissions(PermissionsBitField.Flags.SendMessages)
     ,
 	async execute(interaction, client) {
     const xpSchema = require('../gainxp.js')
