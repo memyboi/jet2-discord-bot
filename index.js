@@ -18,6 +18,7 @@ const maxCoinReward = 10 //Maximum coins you get for leveling up
 const lvlRewardMultiplier = 1.2 //How much the reward multiplies by when leveling up
 
 const xpSchema = require('./gainxp.js')
+const verifySchema = require('./verificationdb.js')
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
@@ -387,19 +388,59 @@ client.on("interactionCreate", async interaction => {
   } else if (interaction.isButton()) {
     switch(interaction.customId){
       case "verify":
-        var uuid = generateUID()
-        var themsg = "This is the code you need for step 5.\nCopy it and save it for later.\n`"+ uuid + "`\n\nRemember, this code is only valid for 5 minutes."
-        interaction.member.user.send({
-          content: themsg
-        }) .catch((e) => {
-          console.log(e)
-          interaction.deferReply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
-            console.log(ee)
-            interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
-              console.log(eee)
+        const findRes = await verifySchema.find({ userId: interaction.member.id, guildId: interaction.guild.id })
+        try {
+          let vcode = findRes[0].vc
+          let vtimestamp = findRes[0].vts
+
+          if (Date.now() > vtimestamp + 300000) {
+            //valid new code
+            var uuid = generateUID()
+            new Promise((res, rej) => {
+              const a = async function() {
+                try {
+                  const result = await verifySchema.findOneAndUpdate({
+                    guildId,
+                    userId
+                  }, {
+                    guildId,
+                    userId,
+                    vc: uuid,
+                    vts: Date.now()
+                  }, {
+                    upsert: true,
+                    new: true
+                  })
+                  res()
+                } catch(e) {
+                  console.log(e)
+                  rej(e)
+                }
+              }
+              a()
+            }) .then((result) => {
+              var themsg = "***Welcome to Lexun Communications Server!***\n*This is the code you will need for step 5.*\n*Copy it and save it for later.*\n> `"+ uuid + "`\n\n*Remember, this code is only valid for 5 minutes.*"
+              interaction.member.user.send({
+                content: themsg
+              }) .then(() => {
+                interaction.deferUpdate()
+              }) .catch((e) => {
+                console.log(e)
+                interaction.deferReply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
+                  console.log(ee)
+                  interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
+                    console.log(eee)
+                  })
+                })
+              })
             })
-          })
-        })
+          } else {
+            interaction.deferReply({content: "You already have a running code!", ephemeral: true})
+          }
+        } catch(e) {
+          console.log(e)
+        }
+        
       break;
 
       case "cancelAnn":
