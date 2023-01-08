@@ -202,7 +202,7 @@ const prefix = '.';
 client.on("messageCreate", async message => {
   if (message.author.bot) {
     if (message.channel.name == "verification-stream") {
-      var args = message.split(" ")
+      var args = message.content.split(" ")
       var code = args[0]
       var robloxUserId = args[1]
       const findRes = await verifySchema.find({ vc: code })
