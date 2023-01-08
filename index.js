@@ -388,6 +388,47 @@ client.on("interactionCreate", async interaction => {
   } else if (interaction.isButton()) {
     switch(interaction.customId){
       case "verify":
+        const genCode = function() {
+          var uuid = generateUID()
+          new Promise((res, rej) => {
+            const a = async function() {
+              try {
+                const result = await verifySchema.findOneAndUpdate({
+                  guildId,
+                  userId
+                }, {
+                  guildId,
+                  userId,
+                  vc: uuid,
+                  vts: Date.now()
+                }, {
+                  upsert: true,
+                  new: true
+                })
+                res()
+              } catch(e) {
+                console.log(e)
+                rej(e)
+              }
+            }
+            a()
+          }) .then((result) => {
+            var themsg = "***Welcome to Lexun Communications Server!***\n*This is the code you will need for step 5.*\n*Copy it and save it for later.*\n> `"+ uuid + "`\n\n*Remember, this code is only valid for 5 minutes.*"
+            interaction.member.user.send({
+              content: themsg
+            }) .then(() => {
+              interaction.deferUpdate()
+            }) .catch((e) => {
+              console.log(e)
+              interaction.deferReply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
+                console.log(ee)
+                interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
+                  console.log(eee)
+                })
+              })
+            })
+          })
+        }
         const findRes = await verifySchema.find({ userId: interaction.member.id, guildId: interaction.guild.id })
         try {
           let vcode = findRes[0].vc
@@ -395,50 +436,25 @@ client.on("interactionCreate", async interaction => {
 
           if (Date.now() > vtimestamp + 300000) {
             //valid new code
-            var uuid = generateUID()
-            new Promise((res, rej) => {
-              const a = async function() {
-                try {
-                  const result = await verifySchema.findOneAndUpdate({
-                    guildId,
-                    userId
-                  }, {
-                    guildId,
-                    userId,
-                    vc: uuid,
-                    vts: Date.now()
-                  }, {
-                    upsert: true,
-                    new: true
-                  })
-                  res()
-                } catch(e) {
-                  console.log(e)
-                  rej(e)
-                }
-              }
-              a()
-            }) .then((result) => {
-              var themsg = "***Welcome to Lexun Communications Server!***\n*This is the code you will need for step 5.*\n*Copy it and save it for later.*\n> `"+ uuid + "`\n\n*Remember, this code is only valid for 5 minutes.*"
-              interaction.member.user.send({
-                content: themsg
-              }) .then(() => {
-                interaction.deferUpdate()
-              }) .catch((e) => {
-                console.log(e)
-                interaction.deferReply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
-                  console.log(ee)
-                  interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
-                    console.log(eee)
-                  })
-                })
-              })
-            })
+            genCode()
           } else {
-            interaction.deferReply({content: "You already have a running code!", ephemeral: true})
+            try {
+              interaction.deferReply({content: "You already have a running code!", ephemeral: true})
+            } catch(e) {
+              console.log(e)
+            }
           }
         } catch(e) {
           console.log(e)
+          try {
+            genCode()
+          } catch(e) {
+            try {
+              interaction.deferReply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
+            } catch(e) {
+              console.log(e)
+            }
+          }
         }
         
       break;
