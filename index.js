@@ -113,6 +113,16 @@ function setCharAt(str,index,chr) {
   return str.substring(0,index) + chr + str.substring(index+1);
 }
 
+function generateUID() {
+  // I generate the UID from two parts here 
+  // to ensure the random number provide enough bits.
+  var firstPart = (Math.random() * 46656) | 0;
+  var secondPart = (Math.random() * 46656) | 0;
+  firstPart = ("000" + firstPart.toString(36)).slice(-3);
+  secondPart = ("000" + secondPart.toString(36)).slice(-3);
+  return firstPart + secondPart;
+}
+
 const addLevel = async (guildId, userId, cLevel) => {
   try {
     const result = await xpSchema.findOneAndUpdate({
@@ -377,7 +387,7 @@ client.on("interactionCreate", async interaction => {
   } else if (interaction.isButton()) {
     switch(interaction.customId){
       case "verify":
-        var uuid = UUID.randomUUID().toString().replace("-","").substring(0,6)
+        var uuid = generateUID()
         var themsg = "This is the code you need for step 5.\nCopy it and save it for later.\n`"+ uuid + "`\n\nRemember, this code is only valid for 5 minutes."
         interaction.member.user.send({
           content: themsg
