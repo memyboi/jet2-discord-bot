@@ -378,12 +378,12 @@ client.on("interactionCreate", async interaction => {
     switch(interaction.customId){
       case "verify":
         var uuid = UUID.randomUUID().toString().replace("-","").substring(0,6)
-        var msg = "This is the code you need for step 5.\nCopy it and save it for later.\n`"+ uuid + "`\n\nRemember, this code is only valid for 5 minutes."
+        var themsg = "This is the code you need for step 5.\nCopy it and save it for later.\n`"+ uuid + "`\n\nRemember, this code is only valid for 5 minutes."
         interaction.member.user.send({
-          content: msg
+          content: themsg
         }) .catch((e) => {
           console.log(e)
-          interaction.deferReply({content: msg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
+          interaction.deferReply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
             console.log(ee)
             interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
               console.log(eee)
