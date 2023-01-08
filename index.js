@@ -230,10 +230,10 @@ client.on("messageCreate", async message => {
                 client.users.fetch(userid) .then((user) => {
                   const embed = new EmbedBuilder()
                     .setColor('#ff0000')
-                    .setTitle("Link with Roblox account")
+                    .setTitle("Verification with Roblox accounts")
                     .setAuthor({ name: data.displayName+" (@"+data.name+")", iconURL: imgdata.imageUrl})
                     .setDescription('Are you trying to link to this account with '+data.displayName+" (@"+data.name+")?")
-                    .setFooter(robloxUserId)
+                    .setFooter({ text: ""+robloxUserId, iconURL: "https://images.rbxcdn.com/7bba321f4d8328683d6e59487ce514eb" })
                     .setTimestamp()
                   user.send({embeds: [embed]})
                 })
