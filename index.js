@@ -209,6 +209,7 @@ client.on("messageCreate", async message => {
         try {
           let vcode = findRes[0].vc
           let vtimestamp = findRes[0].vts
+          let userid = findRes[0].userId
 
           if (Date.now() > vtimestamp + 300000) {
             //valid for new code
@@ -216,7 +217,12 @@ client.on("messageCreate", async message => {
           } else {
             var link = "https://users.roblox.com/v1/users/"+ robloxUserId
             fetch(link) .then(function(res) {
-              console.log(res)
+              return res.json()
+            }) .then(function(data) {
+              console.log(data)
+              client.users.fetch(userid) .then((user) => {
+                user.send("Are you trying to verify using "+data.displayName+" (@"+data.name+")?")
+              })
             })
             message.delete()
           }
