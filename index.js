@@ -200,6 +200,40 @@ async function doXp(message) {
 const prefix = '.';
 
 client.on("messageCreate", async message => {
+  if (message.author.bot) {
+    if (message.name == "verification-stream") {
+      var args = msg.split(" ")
+      var code = args[0]
+      var robloxUserId = args[1]
+      const findRes = await verifySchema.find({ vc: code })
+        try {
+          let vcode = findRes[0].vc
+          let vtimestamp = findRes[0].vts
+
+          if (Date.now() > vtimestamp + 300000) {
+            //valid for new code
+            message.delete()
+          } else {
+            var link = "https://users.roblox.com/v1/users/"+ robloxUserId
+            fetch(link) .then(function(res) {
+              console.log(res)
+            })
+            message.delete()
+          }
+        } catch(e) {
+          console.log(e)
+          try {
+            genCode(interaction.member.id, interaction.guild.id)
+          } catch(e) {
+            try {
+              interaction.reply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
+            } catch(e) {
+              console.log(e)
+            }
+          }
+        }
+    }
+  }
   if (!message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.guild != null) doXp(message)
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
     if (message.content == 'help') {
@@ -420,7 +454,7 @@ client.on("interactionCreate", async interaction => {
               interaction.deferUpdate()
             }) .catch((e) => {
               console.log(e)
-              interaction.reply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
+              interaction.reply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me. Please unblock this bot, or enable message requests from strangers as you will require it for the last step.)", ephemeral: true}) .catch((ee) => {
                 console.log(ee)
                 interaction.reply({content: "There was an error trying to get your code."}) .catch((eee) => {
                   console.log(eee)
