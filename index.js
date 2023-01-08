@@ -198,7 +198,7 @@ async function doXp(message) {
 }
 
 const prefix = '.';
-
+//
 client.on("messageCreate", async message => {
   if (message.author.bot) {
     if (message.name == "verification-stream") {
