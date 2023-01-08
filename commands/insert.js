@@ -76,6 +76,7 @@ module.exports = {
       interaction.channel.send({content: content, components: [
         row
       ]})
+      interaction.deferReply({content: "The button has been inserted.", ephemeral: true})
     }
 	} 
 };

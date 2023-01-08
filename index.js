@@ -43,7 +43,6 @@ const Canvas = require('@napi-rs/canvas');
 const discordModals = require("discord-modals")
 discordModals(client)
 
-
 client.commands = new Discord.Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
@@ -377,6 +376,22 @@ client.on("interactionCreate", async interaction => {
     }
   } else if (interaction.isButton()) {
     switch(interaction.customId){
+      case "verify":
+        var uuid = UUID.randomUUID().toString().replace("-","").substring(0,6)
+        var msg = "This is the code you need for step 5.\nCopy it and save it for later.\n`"+ uuid + "`\n\nRemember, this code is only valid for 5 minutes."
+        interaction.member.user.send({
+          content: msg
+        }) .catch((e) => {
+          console.log(e)
+          interaction.deferReply({content: msg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
+            console.log(ee)
+            interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
+              console.log(eee)
+            })
+          })
+        })
+      break;
+
       case "cancelAnn":
         //cancel announcement form
         let cancelMsg = "This announcement has been cancelled. Please post `.flight announce` in `Jet2 Communications Server` or `here, in DMs` to announce a flight."
@@ -444,7 +459,6 @@ client.on("interactionCreate", async interaction => {
 
         timeofflight = timeofflight.substring(2)
         destofflight = destofflight.substring(2)
-        
 
 
         //post announcement form to flight-announcements
