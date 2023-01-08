@@ -420,9 +420,9 @@ client.on("interactionCreate", async interaction => {
               interaction.deferUpdate()
             }) .catch((e) => {
               console.log(e)
-              interaction.deferReply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
+              interaction.reply({content: themsg+"\n(Note: You did not recieve a DM because you may have message requests from strangers turned off, or you have blocked me.)", ephemeral: true}) .catch((ee) => {
                 console.log(ee)
-                interaction.deferReply({content: "There was an error trying to get your code."}) .catch((eee) => {
+                interaction.reply({content: "There was an error trying to get your code."}) .catch((eee) => {
                   console.log(eee)
                 })
               })
@@ -439,7 +439,7 @@ client.on("interactionCreate", async interaction => {
             genCode(interaction.member.id, interaction.guild.id)
           } else {
             try {
-              interaction.deferReply({content: "You already have a running code!", ephemeral: true})
+              interaction.reply({content: "You already have a running code!", ephemeral: true})
             } catch(e) {
               console.log(e)
             }
@@ -450,7 +450,7 @@ client.on("interactionCreate", async interaction => {
             genCode(interaction.member.id, interaction.guild.id)
           } catch(e) {
             try {
-              interaction.deferReply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
+              interaction.reply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
             } catch(e) {
               console.log(e)
             }
