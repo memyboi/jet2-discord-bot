@@ -388,7 +388,7 @@ client.on("interactionCreate", async interaction => {
   } else if (interaction.isButton()) {
     switch(interaction.customId){
       case "verify":
-        const genCode = function() {
+        const genCode = function(userId, guildId) {
           var uuid = generateUID()
           new Promise((res, rej) => {
             const a = async function() {
@@ -436,7 +436,7 @@ client.on("interactionCreate", async interaction => {
 
           if (Date.now() > vtimestamp + 300000) {
             //valid new code
-            genCode()
+            genCode(interaction.member.id, interaction.guild.id)
           } else {
             try {
               interaction.deferReply({content: "You already have a running code!", ephemeral: true})
@@ -447,7 +447,7 @@ client.on("interactionCreate", async interaction => {
         } catch(e) {
           console.log(e)
           try {
-            genCode()
+            genCode(interaction.member.id, interaction.guild.id)
           } catch(e) {
             try {
               interaction.deferReply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
