@@ -201,7 +201,7 @@ const prefix = '.';
 //
 client.on("messageCreate", async message => {
   if (message.author.bot) {
-    if (message.name == "verification-stream") {
+    if (message.channel.name == "verification-stream") {
       var args = msg.split(" ")
       var code = args[0]
       var robloxUserId = args[1]
