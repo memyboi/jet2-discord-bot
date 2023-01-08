@@ -15,6 +15,10 @@ const schema = new mongoose.Schema({
   vts: { //verification Timestamp
     type: Number,
     default: 0
+  },
+  rbxuserId: { //verification Timestamp
+    type: rString,
+    default: "0"
   }
 })
 module.exports = mongoose.model('verification', schema, 'verification')

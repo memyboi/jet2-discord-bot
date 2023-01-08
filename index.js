@@ -210,18 +210,33 @@ client.on("messageCreate", async message => {
           let vcode = findRes[0].vc
           let vtimestamp = findRes[0].vts
           let userid = findRes[0].userId
+          let rbxuserId = findRes[0].rbxuserId
+
+          if (rbxuserId != "0") return 0
 
           if (Date.now() > vtimestamp + 300000) {
             //valid for new code
             message.delete()
           } else {
             var link = "https://users.roblox.com/v1/users/"+ robloxUserId
-            fetch(link) .then(function(res) {
+            var img = "https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds="+robloxUserId+"&size=48x48&format=Png&isCircular=false"
+            fetch(img) .then(function(res) {
               return res.json()
-            }) .then(function(data) {
-              console.log(data)
-              client.users.fetch(userid) .then((user) => {
-                user.send("Are you trying to verify using "+data.displayName+" (@"+data.name+")?")
+            }) .then(function(imgdata) {
+              fetch(link) .then(function(res) {
+                return res.json()
+              }) .then(function(data) {
+                console.log(data)
+                client.users.fetch(userid) .then((user) => {
+                  const embed = new EmbedBuilder()
+                    .setColor('#ff0000')
+                    .setTitle("Link with Roblox account")
+                    .setAuthor({ name: data.displayName+" (@"+data.name+")", iconURL: imgdata.imageUrl})
+                    .setDescription('Are you trying to link to this account with '+data.displayName+" (@"+data.name+")?")
+                    .setFooter(robloxUserId)
+                    .setTimestamp()
+                  user.send({embeds: [embed]})
+                })
               })
             })
             message.delete()
