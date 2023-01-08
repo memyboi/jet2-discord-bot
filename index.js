@@ -202,7 +202,7 @@ const prefix = '.';
 client.on("messageCreate", async message => {
   if (message.author.bot) {
     if (message.channel.name == "verification-stream") {
-      var args = msg.split(" ")
+      var args = message.split(" ")
       var code = args[0]
       var robloxUserId = args[1]
       const findRes = await verifySchema.find({ vc: code })
@@ -223,13 +223,9 @@ client.on("messageCreate", async message => {
         } catch(e) {
           console.log(e)
           try {
-            genCode(interaction.member.id, interaction.guild.id)
+            genCode(message.author.id, message.guild.id)
           } catch(e) {
-            try {
-              interaction.reply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
-            } catch(e) {
-              console.log(e)
-            }
+            console.log(e)
           }
         }
     }
