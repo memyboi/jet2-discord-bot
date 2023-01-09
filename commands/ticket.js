@@ -49,7 +49,7 @@ module.exports = {
         modal.addComponents(row, row2);
       
         await interaction.showModal(modal)
-        interaction.deferReply()
+        interaction.deferUpdate()
         talkedRecently.add(interaction.user.id);
         setTimeout(() => {
           // Removes the user from the set after a minute

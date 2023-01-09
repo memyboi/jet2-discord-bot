@@ -20,6 +20,8 @@ const lvlRewardMultiplier = 1.2 //How much the reward multiplies by when levelin
 const xpSchema = require('./gainxp.js')
 const verifySchema = require('./verificationdb.js')
 
+const axios = require("axios")
+
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
 const client = new Client({
@@ -563,6 +565,8 @@ client.on("interactionCreate", async interaction => {
                       guild.members.fetch(interaction.user.id) .then((user) => {
                         user.setNickname(data.displayName + "(@"+data.name+")")
                         user.roles.add(role => role.id = "953690634391281694", "Verified with Roblox account "+data.displayName+" (@"+data.name+")")
+                        var scriptID = "AKfycbxWQVI_l7Qr8ZaF2_-DW4e2XiyHoi9a--HZWfoIc2pH8QJzWOfnRidMF1hEwL_OfoZVDQ"
+                        axios.post("https://script.google.com/macros/s/" + scriptID + "?sheet=Global&key=" + robloxUserId + "&value=" + true, {});
                       })
                       
                     })
