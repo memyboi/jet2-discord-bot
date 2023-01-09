@@ -529,7 +529,8 @@ client.on("interactionCreate", async interaction => {
           let vtimestamp = findRes2[0].vts
           let rbxuserId = findRes2[0].rbxuserId
 
-          let robloxUserId = parseInt(interaction.message.embeds[0].footer.text)
+          let robloxUserId = interaction.message.embeds[0].footer.text
+          console.log(robloxUserId)
 
           if (Date.now() > vtimestamp + 300000) {
             //valid new code
@@ -558,9 +559,14 @@ client.on("interactionCreate", async interaction => {
                     new: true
                   })
                   try {
-                    let person = interaction.guild.members.fetch(interaction.user.id);
-                    (await person).setNickname(data.displayName + "(@"+data.name+")")
-                    (await person).roles.add(role => role.id = "953690634391281694", "Verified with Roblox account "+data.displayName+" (@"+data.name+")")
+                    client.guilds.fetch(process.env.guildid) .then((guild) => {
+                      guild.members.fetch(interaction.user.id) .then((user) => {
+                        user.setNickname(data.displayName + "(@"+data.name+")")
+                        user.roles.add(role => role.id = "953690634391281694", "Verified with Roblox account "+data.displayName+" (@"+data.name+")")
+                      })
+                      
+                    })
+                    
                   } catch(e) {
                     console.log(e)
                     try{
