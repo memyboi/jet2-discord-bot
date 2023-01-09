@@ -522,6 +522,7 @@ client.on("interactionCreate", async interaction => {
 
       case "acceptverification":
         //send yes to roblox client
+        console.log(interaction)
         const findRes2 = await verifySchema.find({ userId: interaction.member.user.id, guildId: interaction.guild.id })
         try {
           let vcode = findRes2[0].vc
