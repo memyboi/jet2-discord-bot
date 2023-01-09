@@ -522,7 +522,7 @@ client.on("interactionCreate", async interaction => {
 
       case "acceptverification":
         //send yes to roblox client
-        const findRes2 = await verifySchema.find({ userId: interaction.member.id, guildId: interaction.guild.id })
+        const findRes2 = await verifySchema.find({ userId: interaction.user.id, guildId: interaction.guild.id })
         try {
           let vcode = findRes2[0].vc
           let vtimestamp = findRes2[0].vts
@@ -532,7 +532,11 @@ client.on("interactionCreate", async interaction => {
 
           if (Date.now() > vtimestamp + 300000) {
             //valid new code
-            genCode(interaction.member.id, interaction.guild.id)
+            try {
+              interaction.reply({content: "Your verification code has expired. Try again with another one.", ephemeral: true})
+            } catch(e) {
+              console.log(e)
+            }
           } else {
             try {
               var link = "https://users.roblox.com/v1/users/"+ robloxUserId
@@ -559,7 +563,7 @@ client.on("interactionCreate", async interaction => {
                   } catch(e) {
                     console.log(e)
                     try{
-                      interaction.member.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
+                      interaction.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
                     } catch(e) {
                       console.log(e)
                     }
@@ -577,7 +581,7 @@ client.on("interactionCreate", async interaction => {
         } catch(e) {
           console.log(e)
           try {
-            genCode(interaction.member.id, interaction.guild.id)
+            interaction.reply({content: "You have not begun the verification process.", ephemeral: true})
           } catch(e) {
             try {
               interaction.reply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
