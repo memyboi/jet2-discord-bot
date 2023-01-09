@@ -209,7 +209,6 @@ client.on("messageCreate", async message => {
       var robloxUserId = args[1]
       const findRes = await verifySchema.find({ vc: code })
         try {
-          let vcode = findRes[0].vc
           let vtimestamp = findRes[0].vts
           let userid = findRes[0].userId
           let rbxuserId = findRes[0].rbxuserId
@@ -255,11 +254,6 @@ client.on("messageCreate", async message => {
           }
         } catch(e) {
           console.log(e)
-          try {
-            genCode(message.author.id, message.guild.id)
-          } catch(e) {
-            console.log(e)
-          }
         }
     }
   }
