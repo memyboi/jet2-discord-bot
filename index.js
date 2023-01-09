@@ -523,7 +523,7 @@ client.on("interactionCreate", async interaction => {
       case "acceptverification":
         //send yes to roblox client
         console.log(interaction)
-        const findRes2 = await verifySchema.find({ userId: interaction.user.id, guildId: interaction.guild.id })
+        const findRes2 = await verifySchema.find({ userId: interaction.user.id })
         try {
           let vcode = findRes2[0].vc
           let vtimestamp = findRes2[0].vts
@@ -547,7 +547,6 @@ client.on("interactionCreate", async interaction => {
                 interaction.reply({content: "You have verified as "+data.displayName+" (@"+data.name+")!", ephemeral: true})
                 try {
                   const result = await verifySchema.findOneAndUpdate({
-                    guildId,
                     userId
                   }, {
                     guildId,
