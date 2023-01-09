@@ -263,7 +263,7 @@ client.on("messageCreate", async message => {
   }
   if (!message.content.toLowerCase().startsWith(prefix) && !message.author.bot && message.guild != null) doXp(message)
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
-    if (message.content == 'help') {
+    if (message.content == prefix+'help') {
       const helpEmbed = new EmbedBuilder()
         .setColor('#ff0000')
         .setTitle("Command help:")
@@ -518,6 +518,78 @@ client.on("interactionCreate", async interaction => {
           }
         }
         
+      break;
+
+      case "acceptverification":
+        //send yes to roblox client
+        const findRes2 = await verifySchema.find({ userId: interaction.member.id, guildId: interaction.guild.id })
+        try {
+          let vcode = findRes2[0].vc
+          let vtimestamp = findRes2[0].vts
+          let rbxuserId = findRes2[0].rbxuserId
+
+          let robloxUserId = parseInt(interaction.message.embeds[0].footer.text)
+
+          if (Date.now() > vtimestamp + 300000) {
+            //valid new code
+            genCode(interaction.member.id, interaction.guild.id)
+          } else {
+            try {
+              var link = "https://users.roblox.com/v1/users/"+ robloxUserId
+              fetch(link, function(res) {
+                return res.json()
+              }) .then(async (data) => {
+                interaction.reply({content: "You have verified as "+data.displayName+" (@"+data.name+")!", ephemeral: true})
+                try {
+                  const result = await verifySchema.findOneAndUpdate({
+                    guildId,
+                    userId
+                  }, {
+                    guildId,
+                    userId,
+                    rbxuserId: robloxUserId
+                  }, {
+                    upsert: true,
+                    new: true
+                  })
+                  try {
+                    let person = interaction.guild.members.fetch(interaction.member.id);
+                    (await person).setNickname(data.displayName + "(@"+data.name+")")
+                    (await person).roles.add(role => role.id = "953690634391281694", "Verified with Roblox account "+data.displayName+" (@"+data.name+")")
+                  } catch(e) {
+                    console.log(e)
+                    try{
+                      interaction.member.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
+                    } catch(e) {
+                      console.log(e)
+                    }
+                  }
+                  
+                } catch(e) {
+                  console.log(e)
+                }
+              }) 
+              
+            } catch(e) {
+              console.log(e)
+            }
+          }
+        } catch(e) {
+          console.log(e)
+          try {
+            genCode(interaction.member.id, interaction.guild.id)
+          } catch(e) {
+            try {
+              interaction.reply({content: "Verification seems to be not currently working. Please try again later.", ephemeral: true})
+            } catch(e) {
+              console.log(e)
+            }
+          }
+        }
+      break;
+
+      case "declineverification":
+        //send no to roblox client
       break;
 
       case "cancelAnn":
