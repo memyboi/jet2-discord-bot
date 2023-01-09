@@ -523,7 +523,7 @@ client.on("interactionCreate", async interaction => {
       case "acceptverification":
         //send yes to roblox client
         console.log(interaction)
-        const findRes2 = await verifySchema.find({ userId: interaction.member.user.id, guildId: interaction.guild.id })
+        const findRes2 = await verifySchema.find({ userId: interaction.user.id, guildId: interaction.guild.id })
         try {
           let vcode = findRes2[0].vc
           let vtimestamp = findRes2[0].vts
@@ -558,13 +558,13 @@ client.on("interactionCreate", async interaction => {
                     new: true
                   })
                   try {
-                    let person = interaction.guild.members.fetch(interaction.member.id);
+                    let person = interaction.guild.members.fetch(interaction.user.id);
                     (await person).setNickname(data.displayName + "(@"+data.name+")")
                     (await person).roles.add(role => role.id = "953690634391281694", "Verified with Roblox account "+data.displayName+" (@"+data.name+")")
                   } catch(e) {
                     console.log(e)
                     try{
-                      interaction.member.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
+                      interaction.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
                     } catch(e) {
                       console.log(e)
                     }
