@@ -544,8 +544,9 @@ client.on("interactionCreate", async interaction => {
               fetch(link, function(res) {
                 return res.json()
               }) .then(async (data) => {
-                interaction.reply({content: "You have verified as "+data.displayName+" (@"+data.name+")!", ephemeral: true})
+                await interaction.reply({content: "You have verified as "+data.displayName+" (@"+data.name+")!", ephemeral: true})
                 try {
+                  var userId = interaction.user.id
                   const result = await verifySchema.findOneAndUpdate({
                     userId
                   }, {
