@@ -522,7 +522,7 @@ client.on("interactionCreate", async interaction => {
 
       case "acceptverification":
         //send yes to roblox client
-        const findRes2 = await verifySchema.find({ userId: interaction.user.id, guildId: interaction.guild.id })
+        const findRes2 = await verifySchema.find({ userId: interaction.member.user.id, guildId: interaction.guild.id })
         try {
           let vcode = findRes2[0].vc
           let vtimestamp = findRes2[0].vts
@@ -563,7 +563,7 @@ client.on("interactionCreate", async interaction => {
                   } catch(e) {
                     console.log(e)
                     try{
-                      interaction.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
+                      interaction.member.user.send({content: "There was an error trying to verify you. Please open a ticket and ask a mod for help, or try again."})
                     } catch(e) {
                       console.log(e)
                     }
