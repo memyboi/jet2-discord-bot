@@ -24,6 +24,7 @@ const axios = require("axios")
 const express = require("express")
 const http = require("http")
 const app = express()
+const { fetch } = require("node-fetch")
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
@@ -110,14 +111,16 @@ for (const file of commandFiles) {
 	}
 }
 
-app.use('/hooks/rbxverify:vc:rbxid', async (req, res) => {
+app.use('/hooks/rbxverify:info', async (req, res) => {
   console.log("Æ")
   try {
     // print request body
-    console.log(req.body);
+    var allinfotable = (""+req.params.info).substring(1).split(" ")
+    console.log(allinfotable)
 
-    var code = req.query.vc
-    var robloxUserId = req.query.robloxUserId
+    var code = allinfotable[0]
+    var robloxUserId = allinfotable[1]
+    console.log(code + " , " + robloxUserId)
     const findRes = await verifySchema.find({ vc: code })
     try {
       let vtimestamp = findRes[0].vts
@@ -135,7 +138,7 @@ app.use('/hooks/rbxverify:vc:rbxid', async (req, res) => {
           ]
       };
 
-      if (rbxuserId != "0") return res.sendStatus(400);
+      //if (rbxuserId != "0") return res.sendStatus(400);
 
       if (Date.now() > vtimestamp + 300000) {
         //valid for new code
@@ -167,6 +170,7 @@ app.use('/hooks/rbxverify:vc:rbxid', async (req, res) => {
                 .setStyle(ButtonStyle.Danger)
                 .setCustomId("declineverification")
               const row = new ActionRowBuilder().addComponents(accept, decline)
+              console.log(embed)
               try {
                 user.send({embeds: [embed], components: [row]})
                 return res.json(acceptRes);
