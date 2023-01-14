@@ -114,7 +114,7 @@ for (const file of commandFiles) {
 	}
 }
 
-app.post('/hooks/', async (req, res) => {
+app.post('/hooks/rbxverify', async (req, res) => {
   try {
     // print request body
     console.log(req.body);
