@@ -22,8 +22,12 @@ const verifySchema = require('./verificationdb.js')
 
 const axios = require("axios")
 const express = require("express")
+const http = require("http")
+const app = express()
 
-app.listen(3000, () => console.log('Now listening on port 3000.'));
+http.createServer(app).listen(3000, () => {
+  console.log('Now listening on port 3000.')
+})
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
