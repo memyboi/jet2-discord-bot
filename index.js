@@ -23,7 +23,7 @@ const verifySchema = require('./verificationdb.js')
 const axios = require("axios")
 const express = require("express")
 const http = require("http")
-const app = express.createServer()
+const app = express()
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
