@@ -24,7 +24,6 @@ const axios = require("axios")
 const express = require("express")
 const http = require("http")
 const app = express()
-const { fetch } = require("node-fetch")
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
