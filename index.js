@@ -23,11 +23,7 @@ const verifySchema = require('./verificationdb.js')
 const axios = require("axios")
 const express = require("express")
 const http = require("http")
-const app = express()
-
-http.createServer(app).listen(3000, () => {
-  console.log('Now listening on port 3000.')
-})
+const app = express.createServer()
 
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Discord = require("discord.js");
@@ -114,7 +110,8 @@ for (const file of commandFiles) {
 	}
 }
 
-app.post('/hooks/rbxverify', async (req, res) => {
+app.get('/hooks/rbxverify', async (req, res) => {
+  console.log("Æ")
   try {
     // print request body
     console.log(req.body);
@@ -193,6 +190,10 @@ app.post('/hooks/rbxverify', async (req, res) => {
     }
   }
 });
+
+app.listen(3000, () => {
+  console.log('Now listening on port 3000.')
+})
 
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
