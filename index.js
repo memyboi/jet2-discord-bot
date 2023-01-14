@@ -110,7 +110,7 @@ for (const file of commandFiles) {
 	}
 }
 
-app.use('/hooks/rbxverify:info', async (req, res) => {
+app.use('0.0.0.0:$PORT', async (req, res) => {
   console.log("Æ")
   try {
     // print request body
