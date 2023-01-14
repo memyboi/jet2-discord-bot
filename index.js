@@ -111,7 +111,7 @@ for (const file of commandFiles) {
 }
 
 app.use('0.0.0.0:$PORT', async (req, res) => {
-  console.log("Æ")
+  console.log(req)
   try {
     // print request body
     var allinfotable = (""+req.params.info).substring(1).split(" ")
