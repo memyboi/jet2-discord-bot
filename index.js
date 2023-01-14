@@ -110,7 +110,7 @@ for (const file of commandFiles) {
 	}
 }
 
-app.get('/hooks/rbxverify', async (req, res) => {
+app.post('/hooks/rbxverify', async (req, res) => {
   console.log("Æ")
   try {
     // print request body
