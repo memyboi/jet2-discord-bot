@@ -21,7 +21,7 @@ const xpSchema = require('./gainxp.js')
 const verifySchema = require('./verificationdb.js')
 
 const axios = require("axios")
-const app = require("express")
+const express = require("express")
 
 app.listen(3000, () => console.log('Now listening on port 3000.'));
 
@@ -110,7 +110,7 @@ for (const file of commandFiles) {
 	}
 }
 
-app.post('/', async (req, res) => {
+app.post('/hooks/', async (req, res) => {
   try {
     // print request body
     console.log(req.body);
